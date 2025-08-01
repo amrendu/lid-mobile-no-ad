@@ -443,10 +443,10 @@ export const questionsData = [
     "answer": "Bild 1",
     "answer_en": "Image 1",
     "image_paths": [
-      "./res/extracted_images/page_9_image_033c7610-5feb-4dbc-adf1-7011dc3201fd.png",
-      "./res/extracted_images/page_9_image_5a4f22af-1917-4d03-8ccc-826dcb9bbb26.png",
-      "./res/extracted_images/page_9_image_35985f42-b23b-47ed-b802-eaaf2e9a5e62.png",
-      "./res/extracted_images/page_9_image_9e0b8f20-0abf-4931-9a37-fe4dadd4a4de.jpg"
+      "./images/general-21-option-1.png",
+      "./images/general-21-option-2.png",
+      "./images/general-21-option-3.png",
+      "./images/general-21-option-4.jpg"
     ]
   },
   {
@@ -1162,7 +1162,7 @@ export const questionsData = [
     "answer": "den Bundestagssitz in Berlin",
     "answer_en": "The Bundestag headquarters in Berlin",
     "image_paths": [
-      "./res/extracted_images/page_21_image_c08d42df-500d-4d88-bc2e-97194b8b3a88.jpg"
+      "./images/general-55-question.jpg"
     ]
   },
   {
@@ -1478,7 +1478,7 @@ export const questionsData = [
     ],
     "answer": "Sie/Er schlägt die Kanzlerin/den Kanzler zur Wahl vor",
     "answer_en": "She/He proposes the Chancellor for election",
-    "image_paths": []
+    "image_paths": ["./images/general-70-question.png"]
   },
   {
     "question_number": 71,
@@ -2739,7 +2739,7 @@ export const questionsData = [
     "answer": "1",
     "answer_en": "1",
     "image_paths": [
-      "./res/extracted_images/page_48_image_e3f539d1-9fd5-42a9-b618-f06d8e2d4d4r.png"
+      "./images/general-130-question.png"
     ]
   },
   {
@@ -3707,7 +3707,7 @@ export const questionsData = [
     "answer": "1=Großbritannien, 2=Sowjetunion, 3=USA, 4=Frankreich",
     "answer_en": "1 = Great Britain, 2 = Soviet Union, 3 = USA, 4 = France",
     "image_paths": [
-      "./res/extracted_images/page_64_image_e3f539d1-9fd5-42a9-b618-f06d8e2d4d4r.png"
+      "./images/general-176-question.png"
     ]
   },
   {
@@ -3814,16 +3814,16 @@ export const questionsData = [
     "answer": "Er bat Polen und die polnischen Juden um Vergebung",
     "answer_en": "He asked Poland and the Polish Jews for forgiveness",
     "image_paths": [
-      "./res/extracted_images/page_67_image_e3f539d1-9fd5-42a9-b618-f06d8e2d4dfr.png"
+      "./images/general-181-question.png"
     ]
   },
   {
     "question_number": 182,
     "bundesland": "General",
-    "question": "Wie heißt das jüdische Gebetshaus? □ Basilika □ Moschee □ Synagoge □ Kirche",
+    "question": "Wie heißt das jüdische Gebetshaus?",
     "question_en": "What is the name of the Jewish prayer house?",
-    "options": [],
-    "options_en": [],
+    "options": ["Basilika" , "Moschee", "Synagoge", "Kirche"],
+    "options_en": ["Basilica", "Mosque", "Synagogue", "Church"],
     "answer": "Synagoge",
     "answer_en": "Synagogue",
     "image_paths": []
@@ -3852,13 +3852,19 @@ export const questionsData = [
   {
     "question_number": 184,
     "bundesland": "General",
-    "question": "Auf welcher rechtlichen Grundlage wurde der Staat Israel gegründet? □ eine Resolution der Vereinten Nationen □ ein Beschluss des Zionistenkongresses □ ein Vorschlag der Bundesregierung □ ein Vorschlag der UdSSR",
+    "question": "Auf welcher rechtlichen Grundlage wurde der Staat Israel gegründet?",
     "question_en": "On what legal basis was the state of Israel founded?",
     "options": [
-      "Auf welcher rechtlichen Grundlage wurde der Staat Israel gegründet? □ eine Resolution der Vereinten Nationen □ ein Beschluss des Zionistenkongresses □ ein Vorschlag der Bundesregierung □ ein Vorschlag der UdSSR"
+      "eine Resolution der Vereinten Nationen",
+      "ein Beschluss des Zionistenkongresses",
+      "ein Vorschlag der Bundesregierung",
+      "ein Vorschlag der der UdSSR"
     ],
     "options_en": [
-      "On what legal basis was the state of Israel founded?"
+      "a Resolution of the United Nations",
+      "a decision of the Zionist Congress",
+      "a proposal by the federal government",
+      "a proposal by the USSR"
     ],
     "answer": "eine Resolution der Vereinten Nationen",
     "answer_en": "a Resolution of the United Nations",
@@ -3926,7 +3932,7 @@ export const questionsData = [
     "answer": "DDR",
     "answer_en": "GDR",
     "image_paths": [
-      "./res/extracted_images/page_70_image_e3f539d1-9fd5-42a9-b618-f06d8e2d4d4r.png"
+      "./images/general-187-question.png"
     ]
   },
   {
@@ -4310,16 +4316,22 @@ export const questionsData = [
   {
     "question_number": 206,
     "bundesland": "General",
-    "question": "Woran erinnern die sogenannten „Stolpersteine“ in Deutschland? □ an berühmte deutsche Politikerinnen und Politiker □ an die Opfer des Nationalsozialismus □ an Verkehrstote □ an bekannte jüdische Musiker",
+    "question": "Woran erinnern die sogenannten „Stolpersteine“ in Deutschland?",
     "question_en": "What are the so -called \"stumbling blocks\" in Germany?",
     "options": [
-      "Woran erinnern die sogenannten „Stolpersteine“ in Deutschland? □ an berühmte deutsche Politikerinnen und Politiker □ an die Opfer des Nationalsozialismus □ an Verkehrstote □ an bekannte jüdische Musiker"
+      "an berühmte deutsche Politikerinnen und Politiker",
+      "an die Opfer des Nationalsozialismus",
+      "an Verkehrstote",
+      "an bekannte jüdische Musiker"
     ],
     "options_en": [
-      "What are the so -called \"stumbling blocks\" in Germany?"
+      "famous German politicians",
+      "the victims of National Socialism",
+      "traffic fatalities",
+      "well-known Jewish musicians"
     ],
     "answer": "an die Opfer des Nationalsozialismus",
-    "answer_en": "to the victims of National Socialism",
+    "answer_en": "the victims of National Socialism",
     "image_paths": []
   },
   {
@@ -4381,13 +4393,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 2",
-    "answer_en": "Image 2",
+    "answer": "Bild 4",
+    "answer_en": "Image 4",
     "image_paths": [
-      "./res/extracted_images/page_78_image_6a4e8974-9ce0-45fb-a544-13f52155f5d6.png",
-      "./res/extracted_images/page_78_image_e3f539d1-9fd5-42a9-b618-f06d8e2df725.png",
-      "./res/extracted_images/page_78_image_3cfd17db-66d3-4947-9f2d-4da9aab50bc4.png",
-      "./res/extracted_images/page_78_image_7bc09eb6-117b-4cb7-bec7-3e59c4f03d02.jpg"
+      "./images/general-209-option-1.png",
+      "./images/general-209-option-2.png",
+      "./images/general-209-option-3.png",
+      "./images/general-209-option-4.jpg"
     ]
   },
   {
@@ -4536,7 +4548,7 @@ export const questionsData = [
     "answer": "der Bundesadler",
     "answer_en": "The federal eagle",
     "image_paths": [
-      "./res/extracted_images/page_81_image_e3f539d1-9fd5-42a9-b618-f06d8e2d4de4.png"
+      "./images/general-216-question.png"
     ]
   },
   {
@@ -4748,10 +4760,10 @@ export const questionsData = [
     "answer": "Bild 2",
     "answer_en": "Image 2",
     "image_paths": [
-      "./res/extracted_images/page_85_image_fa3d418c-d342-43f2-907e-02d93ca21b61.png",
-      "./res/extracted_images/page_85_image_6432acc6-d594-4748-bbb3-0a1e380cac3e.jpg",
-      "./res/extracted_images/page_85_image_ae042984-b5fb-4b28-978f-a6a2b66a7d2a.jpg",
-      "./res/extracted_images/page_85_image_82c4e904-1bc1-4216-945c-ae9797e52473.jpg"
+      "./images/general-226-option-1.png",
+      "./images/general-226-option-2.jpg",
+      "./images/general-226-option-3.jpg",
+      "./images/general-226-option-4.jpg"
     ]
   },
   {
@@ -4942,7 +4954,7 @@ export const questionsData = [
     "answer": "Frieden und Sicherheit in den Ländern der EU",
     "answer_en": "Peace and security in the countries of the EU",
     "image_paths": [
-      "./res/extracted_images/page_88_image_e3f539d1-9fd5-42a9-b618-f06d8e2d4ffr.png"
+      "./images/general-235-question.png"
     ]
   },
   {
@@ -6040,10 +6052,20 @@ export const questionsData = [
   {
     "question_number": 288,
     "bundesland": "General",
-    "question": "Woraus begründet sich Deutschlands besondere Verantwortung für Israel? □ aus der Mitgliedschaft in der Europäischen Union (EU) □ aus den nationalsozialistischen Verbrechen gegen Juden □ aus dem Grundgesetz der Bundesrepublik Deutschland □ aus der christlichen Tradition",
-    "question_en": "What is Germany's special responsibility for Israel?",
-    "options": [],
-    "options_en": [],
+    "question": "Woraus begründet sich Deutschlands besondere Verantwortung für Israel?",
+    "question_en": "What is Germany's special responsibility for Israel based on?",
+    "options": [
+      "aus der Mitgliedschaft in der Europäischen Union (EU)",
+      "aus den nationalsozialistischen Verbrechen gegen Juden",
+      "aus dem Grundgesetz der Bundesrepublik Deutschland",
+      "aus der christlichen Tradition"
+    ],
+    "options_en": [
+      "from membership in the European Union (EU)",
+      "from the National Socialist crimes against Jews",
+      "from the Basic Law of the Federal Republic of Germany",
+      "from the Christian tradition"
+    ],
     "answer": "aus den nationalsozialistischen Verbrechen gegen Juden",
     "answer_en": "from the Nazi crimes against Jews",
     "image_paths": []
@@ -6317,13 +6339,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 4",
-    "answer_en": "Image 4",
+    "answer": "Bild 1",
+    "answer_en": "Image 1",
     "image_paths": [
-      "./res/extracted_images/page_112_image_f8d95dc0-033c-4611-bfe7-8da70377e282.jpg",
-      "./res/extracted_images/page_112_image_fd5daa7c-7c76-4a2c-b98d-6de42caccb5d.png",
-      "./res/extracted_images/page_112_image_6847a4ba-e6cb-4ad4-8cfa-683eb928ad76.png",
-      "./res/extracted_images/page_112_image_38a21194-1a2b-4b0e-8b9f-c29b7e141982.png"
+      "./images/baden-w-rttemberg-1-option-1.jpg",
+      "./images/baden-w-rttemberg-1-option-2.png",
+      "./images/baden-w-rttemberg-1-option-3.png",
+      "./images/baden-w-rttemberg-1-option-4.png"
     ]
   },
   {
@@ -6472,7 +6494,7 @@ export const questionsData = [
     "answer": "2",
     "answer_en": "2",
     "image_paths": [
-      "./res/extracted_images/page_115_image_e3f539d1-9fd5-42a9-b618-f06d8e2d4dff.png"
+      "./images/baden-w-rttemberg-8-question.png"
     ]
   },
   {
@@ -6534,13 +6556,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 3",
-    "answer_en": "Image 3",
+    "answer": "Bild 2",
+    "answer_en": "Image 2",
     "image_paths": [
-      "./res/extracted_images/page_117_image_2749103f-3154-4b73-88f4-2a8540f924b3.jpg",
-      "./res/extracted_images/page_117_image_9295e22c-e71a-48b2-bfc6-e420c6c7f815.png",
-      "./res/extracted_images/page_117_image_53120c2e-47d1-404c-af7e-6f3daf643df2.png",
-      "./res/extracted_images/page_117_image_1be022ab-8a4f-4816-8447-16404ccbae78.png"
+      "./images/bayern-1-option-1.jpg",
+      "./images/bayern-1-option-2.png",
+      "./images/bayern-1-option-3.png",
+      "./images/bayern-1-option-4.png"
     ]
   },
   {
@@ -6686,9 +6708,9 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "1",
-    "answer_en": "1",
-    "image_paths": []
+    "answer": "4",
+    "answer_en": "4",
+    "image_paths": ["./images/bayern-8-question.png"]
   },
   {
     "question_number": 9,
@@ -6749,13 +6771,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 1",
-    "answer_en": "Image 1",
+    "answer": "Bild 4",
+    "answer_en": "Image 4",
     "image_paths": [
-      "./res/extracted_images/page_122_image_ed0c0285-b6cf-4a96-abc0-72b02c376435.png",
-      "./res/extracted_images/page_122_image_fbd365f9-6aae-474b-8474-1bcb1163a4cb.png",
-      "./res/extracted_images/page_122_image_a587144a-d2d4-4d8b-9a61-3c5104f74a5a.png",
-      "./res/extracted_images/page_122_image_e73434c4-3036-45e1-94ed-4dfdfbfe58d2.png"
+      "./images/berlin-1-option-1.png",
+      "./images/berlin-1-option-2.png",
+      "./images/berlin-1-option-3.png",
+      "./images/berlin-1-option-4.png"
     ]
   },
   {
@@ -6904,7 +6926,7 @@ export const questionsData = [
     "answer": "4",
     "answer_en": "4",
     "image_paths": [
-      "./res/extracted_images/page_125_image_2749103f-3154-4b73-88f4-2a8540f9fd34.png"
+      "./images/berlin-8-question.png"
     ]
   },
   {
@@ -6969,10 +6991,10 @@ export const questionsData = [
     "answer": "Bild 1",
     "answer_en": "Image 1",
     "image_paths": [
-      "./res/extracted_images/page_127_image_259b6001-3320-4b18-9852-461f64e3419b.png",
-      "./res/extracted_images/page_127_image_694beebf-1a7b-4cb1-ad56-97c9cbcca2a8.png",
-      "./res/extracted_images/page_127_image_4a1cbbd0-4056-4a70-88db-fef33e8cc227.png",
-      "./res/extracted_images/page_127_image_1f5d825a-07ec-44e2-b9ba-371458876b7a.jpg"
+      "./images/brandenburg-1-option-1.png",
+      "./images/brandenburg-1-option-2.png",
+      "./images/brandenburg-1-option-3.png",
+      "./images/brandenburg-1-option-4.jpg"
     ]
   },
   {
@@ -7118,9 +7140,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "3",
-    "answer_en": "3",
-    "image_paths": []
+    "answer": "4",
+    "answer_en": "4",
+    "image_paths": [
+      "./images/brandenburg-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -7181,13 +7206,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 2",
-    "answer_en": "Image 2",
+    "answer": "Bild 3",
+    "answer_en": "Image 3",
     "image_paths": [
-      "./res/extracted_images/page_132_image_d545a113-68c4-4e84-b769-8ba0ce4f3e0b.png",
-      "./res/extracted_images/page_132_image_3701f907-a79e-4667-9925-5281f06f2576.jpg",
-      "./res/extracted_images/page_132_image_b7f8b130-f4aa-4fbc-9e9f-886cdf2c9492.png",
-      "./res/extracted_images/page_132_image_52fcf27b-8793-4933-8e5c-7dbd89bbc679.png"
+      "./images/bremen-1-option-1.png",
+      "./images/bremen-1-option-2.jpg",
+      "./images/bremen-1-option-3.png",
+      "./images/bremen-1-option-4.png"
     ]
   },
   {
@@ -7333,9 +7358,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "4",
-    "answer_en": "4",
-    "image_paths": []
+    "answer": "1",
+    "answer_en": "1",
+    "image_paths": [
+      "./images/bremen-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -7399,10 +7427,10 @@ export const questionsData = [
     "answer": "Bild 2",
     "answer_en": "Image 2",
     "image_paths": [
-      "./res/extracted_images/page_137_image_ea53de71-f387-4235-89e2-ca576177f093.png",
-      "./res/extracted_images/page_137_image_e35b7bfd-a71b-4982-8877-3aabf36ee6da.png",
-      "./res/extracted_images/page_137_image_a56f90a8-31ab-4406-b8eb-419b2ff749c2.png",
-      "./res/extracted_images/page_137_image_2587ebfa-ffd2-41f3-9b41-4f4979fd9986.png"
+      "./images/hamburg-1-option-1.png",
+      "./images/hamburg-1-option-2.png",
+      "./images/hamburg-1-option-3.png",
+      "./images/hamburg-1-option-4.png"
     ]
   },
   {
@@ -7548,9 +7576,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "2",
-    "answer_en": "2",
-    "image_paths": []
+    "answer": "3",
+    "answer_en": "3",
+    "image_paths": [
+      "./images/hamburg-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -7611,13 +7642,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 4",
-    "answer_en": "Image 4",
+    "answer": "Bild 1",
+    "answer_en": "Image 1",
     "image_paths": [
-      "./res/extracted_images/page_142_image_81519b6f-3995-4369-b6fb-1f56dcbe6b2f.png",
-      "./res/extracted_images/page_142_image_0053637a-be72-452d-8a12-ac3d307b08eb.png",
-      "./res/extracted_images/page_142_image_59a3734b-7788-4576-b350-7b3f29cbc47b.png",
-      "./res/extracted_images/page_142_image_f6d8e8aa-9a5d-432e-9c1d-b1340077c9b1.jpg"
+      "./images/hessen-1-option-1.png",
+      "./images/hessen-1-option-2.png",
+      "./images/hessen-1-option-3.png",
+      "./images/hessen-1-option-4.jpg"
     ]
   },
   {
@@ -7763,9 +7794,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "2",
-    "answer_en": "2",
-    "image_paths": []
+    "answer": "3",
+    "answer_en": "3",
+    "image_paths": [
+      "./images/hessen-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -7826,13 +7860,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 4",
-    "answer_en": "Image 4",
+    "answer": "Bild 3",
+    "answer_en": "Image 3",
     "image_paths": [
-      "./res/extracted_images/page_147_image_310d1a45-9c0f-4196-8ad0-6b57ee15b875.png",
-      "./res/extracted_images/page_147_image_15a78eec-015c-4d60-8400-434a83b04d45.png",
-      "./res/extracted_images/page_147_image_09a32af6-75f8-452e-9e5e-a2ffd6e7e270.png",
-      "./res/extracted_images/page_147_image_fbc83476-bfe9-49bf-a135-188c1e0df9bd.png"
+      "./images/mecklenburg-vorpommern-1-option-1.png",
+      "./images/mecklenburg-vorpommern-1-option-2.png",
+      "./images/mecklenburg-vorpommern-1-option-3.png",
+      "./images/mecklenburg-vorpommern-1-option-4.png"
     ]
   },
   {
@@ -7978,9 +8012,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "2",
-    "answer_en": "2",
-    "image_paths": []
+    "answer": "3",
+    "answer_en": "3",
+    "image_paths": [
+      "./images/mecklenburg-vorpommern-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -8041,13 +8078,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 4",
-    "answer_en": "Image 4",
+    "answer": "Bild 3",
+    "answer_en": "Image 3",
     "image_paths": [
-      "./res/extracted_images/page_152_image_d271a39a-ad84-46f3-b8a8-105c328cdd1e.png",
-      "./res/extracted_images/page_152_image_0c15045e-d42e-4177-be4c-e10a2e7c2e93.png",
-      "./res/extracted_images/page_152_image_c57e00ac-2409-4377-9d56-cbf8e97d92a0.png",
-      "./res/extracted_images/page_152_image_b0bb6c13-74ad-42e2-95ca-7aecb7426c8c.jpg"
+      "./images/niedersachsen-1-option-1.png",
+      "./images/niedersachsen-1-option-2.png",
+      "./images/niedersachsen-1-option-3.png",
+      "./images/niedersachsen-1-option-4.jpg"
     ]
   },
   {
@@ -8193,9 +8230,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "2",
-    "answer_en": "2",
-    "image_paths": []
+    "answer": "1",
+    "answer_en": "1",
+    "image_paths": [
+      "./images/niedersachsen-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -8256,13 +8296,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 4",
-    "answer_en": "Image 4",
+    "answer": "Bild 2",
+    "answer_en": "Image 2",
     "image_paths": [
-      "./res/extracted_images/page_157_image_8da23fa6-ed17-4de6-b367-7b3bd5db8440.png",
-      "./res/extracted_images/page_157_image_b3a4e6af-ef47-421c-8415-044f11f8d64b.png",
-      "./res/extracted_images/page_157_image_eba5c776-20ed-491a-88bc-2eeabeabf11d.png",
-      "./res/extracted_images/page_157_image_1d34fc1e-85bc-485a-a3c3-fb8b987a21e0.jpg"
+      "./images/nordrhein-westfalen-1-option-1.png",
+      "./images/nordrhein-westfalen-1-option-2.png",
+      "./images/nordrhein-westfalen-1-option-3.png",
+      "./images/nordrhein-westfalen-1-option-4.jpg"
     ]
   },
   {
@@ -8408,9 +8448,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "2",
-    "answer_en": "2",
-    "image_paths": []
+    "answer": "3",
+    "answer_en": "3",
+    "image_paths": [
+      "./images/nordrhein-westfalen-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -8471,13 +8514,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 4",
-    "answer_en": "Image 4",
+    "answer": "Bild 1",
+    "answer_en": "Image 1",
     "image_paths": [
-      "./res/extracted_images/page_162_image_2259b2ed-a73b-4bf1-9c06-de044a1b0153.png",
-      "./res/extracted_images/page_162_image_8fd987bd-f207-4468-9b5e-b8c2a0637693.png",
-      "./res/extracted_images/page_162_image_566493f8-38c4-4797-ad97-8c5851e90572.png",
-      "./res/extracted_images/page_162_image_7b98011d-9324-41ce-8d39-99d617dde4bf.png"
+      "./images/rheinland-pfalz-1-option-1.png",
+      "./images/rheinland-pfalz-1-option-2.png",
+      "./images/rheinland-pfalz-1-option-3.png",
+      "./images/rheinland-pfalz-1-option-4.png"
     ]
   },
   {
@@ -8623,9 +8666,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "2",
-    "answer_en": "2",
-    "image_paths": []
+    "answer": "1",
+    "answer_en": "1",
+    "image_paths": [
+      "./images/rheinland-pfalz-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -8686,13 +8732,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 3",
-    "answer_en": "Image 3",
+    "answer": "Bild 4",
+    "answer_en": "Image 4",
     "image_paths": [
-      "./res/extracted_images/page_167_image_c8693db9-a758-4f17-aff5-a250370949da.png",
-      "./res/extracted_images/page_167_image_24407519-7dc5-445f-a17f-f89067940791.png",
-      "./res/extracted_images/page_167_image_b1a59e2d-8e58-434a-981d-fee26364d7d2.png",
-      "./res/extracted_images/page_167_image_d8d658a1-4620-4d19-b05d-cea364906e53.png"
+      "./images/saarland-1-option-1.png",
+      "./images/saarland-1-option-2.png",
+      "./images/saarland-1-option-3.png",
+      "./images/saarland-1-option-4.png"
     ]
   },
   {
@@ -8838,9 +8884,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "1",
-    "answer_en": "1",
-    "image_paths": []
+    "answer": "2",
+    "answer_en": "2",
+    "image_paths": [
+      "./images/saarland-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -8901,13 +8950,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 1",
-    "answer_en": "Image 1",
+    "answer": "Bild 4",
+    "answer_en": "Image 4",
     "image_paths": [
-      "./res/extracted_images/page_172_image_f5e83659-2c9a-43a0-8c18-8cabcd05459e.png",
-      "./res/extracted_images/page_172_image_7938792b-f32f-4f89-bc0e-9fbc467c60fd.png",
-      "./res/extracted_images/page_172_image_21384a12-f17b-41a6-8af6-579d904f1d86.png",
-      "./res/extracted_images/page_172_image_eb5de51e-73fb-40ec-866d-1da1a92d873e.jpg"
+      "./images/sachsen-1-option-1.png",
+      "./images/sachsen-1-option-2.png",
+      "./images/sachsen-1-option-3.png",
+      "./images/sachsen-1-option-4.jpg"
     ]
   },
   {
@@ -9053,9 +9102,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "3",
-    "answer_en": "3",
-    "image_paths": []
+    "answer": "4",
+    "answer_en": "4",
+    "image_paths": [
+      "./images/sachsen-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -9116,13 +9168,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 2",
-    "answer_en": "Image 2",
+    "answer": "Bild 4",
+    "answer_en": "Image 4",
     "image_paths": [
-      "./res/extracted_images/page_177_image_c24f3365-1392-4b34-99dc-c9c933c6cb39.png",
-      "./res/extracted_images/page_177_image_6f65d41f-c3e3-42e2-9490-09a6fae635e5.png",
-      "./res/extracted_images/page_177_image_49eb9e02-ed7e-41ab-9c12-ddb872581ca1.png",
-      "./res/extracted_images/page_177_image_9664bc9a-cd06-4823-86c6-e6c86da2bd05.png"
+      "./images/sachsen-anhalt-1-option-1.png",
+      "./images/sachsen-anhalt-1-option-2.png",
+      "./images/sachsen-anhalt-1-option-3.png",
+      "./images/sachsen-anhalt-1-option-4.png"
     ]
   },
   {
@@ -9268,9 +9320,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "2",
-    "answer_en": "2",
-    "image_paths": []
+    "answer": "3",
+    "answer_en": "3",
+    "image_paths": [
+      "./images/sachsen-anhalt-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -9331,13 +9386,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 1",
-    "answer_en": "Image 1",
+    "answer": "Bild 3",
+    "answer_en": "Image 3",
     "image_paths": [
-      "./res/extracted_images/page_182_image_cfa6393e-bc41-4b29-a268-c78fc35b537d.png",
-      "./res/extracted_images/page_182_image_294ad4a4-8b5e-4019-a334-4b1c0fb84eb6.png",
-      "./res/extracted_images/page_182_image_90dfc89e-dcc6-40ba-a33d-f08a61730b8a.png",
-      "./res/extracted_images/page_182_image_16edecb9-cc79-48b3-b8d1-b44e7b0c6636.png"
+      "./images/schleswig-holstein-1-option-1.png",
+      "./images/schleswig-holstein-1-option-2.png",
+      "./images/schleswig-holstein-1-option-3.png",
+      "./images/schleswig-holstein-1-option-4.png"
     ]
   },
   {
@@ -9483,9 +9538,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "4",
-    "answer_en": "4",
-    "image_paths": []
+    "answer": "1",
+    "answer_en": "1",
+    "image_paths": [
+      "./images/schleswig-holstein-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,
@@ -9546,13 +9604,13 @@ export const questionsData = [
       "Image 3",
       "Image 4"
     ],
-    "answer": "Bild 3",
-    "answer_en": "Image 3",
+    "answer": "Bild 4",
+    "answer_en": "Image 4",
     "image_paths": [
-      "./res/extracted_images/page_187_image_ab7ab0d8-fccd-4467-a159-da728e116c3a.jpg",
-      "./res/extracted_images/page_187_image_67fba5ed-5220-456e-90f9-1229cd5c2f8d.png",
-      "./res/extracted_images/page_187_image_6b246d55-7ae1-406d-ae5c-a74c86f6cfac.jpg",
-      "./res/extracted_images/page_187_image_2037e50f-ef4f-4413-bf8c-b90ab6c804e0.png"
+      "./images/th-ringen-1-option-1.jpg",
+      "./images/th-ringen-1-option-2.png",
+      "./images/th-ringen-1-option-3.jpg",
+      "./images/th-ringen-1-option-4.png"
     ]
   },
   {
@@ -9698,9 +9756,12 @@ export const questionsData = [
       "3",
       "4"
     ],
-    "answer": "1",
-    "answer_en": "1",
-    "image_paths": []
+    "answer": "2",
+    "answer_en": "2",
+    "image_paths": [
+      "./images/th-ringen-8-question.png"
+
+    ]
   },
   {
     "question_number": 9,

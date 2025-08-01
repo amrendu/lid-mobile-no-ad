@@ -7,6 +7,7 @@ import { useLanguage } from '../utils/languageContext';
 import { useTranslation } from '../hooks/useTranslation';
 import { BorderRadius, Spacing, Shadows } from '../../constants/Colors';
 import { LanguageIcon } from '../../constants/Icons';
+import { getImageSource, getImageSources } from '../utils/imageMapper';
 
 const { width } = Dimensions.get('window');
 
@@ -235,6 +236,10 @@ export default function QuestionCard({
       padding: 8,
       borderWidth: 1,
       borderColor: colors.border,
+      flexDirection: 'row',
+      flexWrap: 'nowrap',
+      justifyContent: 'center',
+      gap: 6,
     },
     translateBtn: {
       flexDirection: 'row',
@@ -524,13 +529,27 @@ export default function QuestionCard({
         </View>
 
         {/* Show image if present */}
-        {question.image_paths && question.image_paths.length > 0 && (
+{question.image_paths && question.image_paths.length > 0 && (
           <View style={dynamicStyles.imageContainer}>
-            <Image
-              source={{ uri: question.image_paths[0] }}
-              style={styles.questionImage}
-              resizeMode="contain"
-            />
+            {question.image_paths.map((imagePath, idx) => {
+              // Calculate image size based on number of images
+              const imageCount = question.image_paths.length;
+              const containerWidth = width - 64; // Account for padding and margins
+              const imageWidth = imageCount === 1 ? containerWidth * 0.6 : 
+                                imageCount === 2 ? (containerWidth - 6) / 2 : 
+                                imageCount === 3 ? (containerWidth - 12) / 3 :
+                                (containerWidth - 18) / 4; // For 4 images, subtract gaps
+              const imageHeight = imageCount === 1 ? 100 : 70;
+              
+              return (
+                <Image
+                  key={`image-${idx}`}
+                  source={getImageSource(imagePath)}
+                  style={[styles.questionImage, { width: imageWidth, height: imageHeight }]}
+                  resizeMode="contain"
+                />
+              );
+            })}
           </View>
         )}
 

@@ -15,7 +15,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from '../src/hooks/useTranslation';
 import { questionsData } from '../src/data/questions';
 import { getItem } from '../src/utils/storage';
@@ -85,6 +85,18 @@ const { t, language, getLanguageInfo } = useTranslation();
       useNativeDriver: true,
     }).start();
   }, []);
+
+// Refresh stats when the screen gains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      // Refresh stats when returning to the overview
+      refreshStats().then(stats => {
+        setBookmarkedCount(stats.bookmarkedCount);
+        setIncorrectCount(stats.incorrectCount);
+        setCorrectCount(stats.correctCount);
+      });
+    }, [])
+  );
 
   // Use statsManager to keep counters updated
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Animated, Dimensions } from 'react-native';
 import { getItem, setItem } from '../utils/storage';
 import { refreshStats } from '../utils/statsManager';
+import { getImageSource } from '../utils/imageMapper';
 
 const { width } = Dimensions.get('window');
 
@@ -237,15 +238,18 @@ export default function QuestionCard({
         </View>
 
         {/* Show image if present */}
-        {question.image_paths && question.image_paths.length > 0 && (
-          <View style={styles.imageContainer}>
-            <Image
-              source={{ uri: question.image_paths[0] }}
-              style={styles.questionImage}
-              resizeMode="contain"
-            />
-          </View>
-        )}
+        {question.image_paths && question.image_paths.length > 0 && (() => {
+          const imageSource = getImageSource(question.image_paths[0]);
+          return imageSource ? (
+            <View style={styles.imageContainer}>
+              <Image
+                source={imageSource}
+                style={styles.questionImage}
+                resizeMode="contain"
+              />
+            </View>
+          ) : null;
+        })()}
 
         <View style={styles.questionContainer}>
           <View style={styles.questionIconContainer}>
