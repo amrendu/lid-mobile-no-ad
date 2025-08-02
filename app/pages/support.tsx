@@ -410,7 +410,7 @@ export default function SupportScreen() {
               </View>
               
               <TouchableOpacity
-                onPress={() => Linking.openURL('https://ko-fi.com/quietcompute')}
+                onPress={() => Linking.openURL('https://ko-fi.com/amrendu')}
                 style={[styles.kofiButton]}
                 activeOpacity={0.8}
               >

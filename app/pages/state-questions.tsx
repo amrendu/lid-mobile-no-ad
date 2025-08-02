@@ -3,6 +3,7 @@ import { TouchableOpacity, Animated, StyleSheet, View, Text, ScrollView, Platfor
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import RNPickerSelect from 'react-native-picker-select';
 
 import { useTranslation } from '../../src/hooks/useTranslation';
@@ -52,12 +53,12 @@ export default function StateQuestionsScreen() {
   // Load bookmarks, answered questions, and selected state from storage
   useEffect(() => {
     const loadData = async () => {
-      const bookmarksData = await getItem(BOOKMARKS_KEY, []);
-      const answeredData = await getItem(ANSWERED_KEY, []);
-      const savedState = await getItem(SELECTED_STATE_KEY, '');
+      const bookmarksData = await getItem(BOOKMARKS_KEY, null);
+      const answeredData = await getItem(ANSWERED_KEY, null);
+      const savedState = await getItem(SELECTED_STATE_KEY, null);
       
-      setBookmarked(bookmarksData ?? []);
-      setAnsweredQuestions(answeredData ?? []);
+      setBookmarked(bookmarksData || []);
+      setAnsweredQuestions(answeredData || []);
       
       // Only set the saved state if it's valid and exists in the bundeslaender list
       if (savedState && bundeslaender.includes(savedState)) {
@@ -88,7 +89,7 @@ export default function StateQuestionsScreen() {
   }, [selectedState]);
 
   // Mark question as answered
-  const markQuestionAnswered = async (question) => {
+  const markQuestionAnswered = async (question: any) => {
     const id = getQuestionId(question);
     if (!answeredQuestions.includes(id)) {
       const updated = [...answeredQuestions, id];
@@ -98,7 +99,7 @@ export default function StateQuestionsScreen() {
   };
 
   // Add/remove bookmark handler
-  const toggleBookmark = async (question) => {
+  const toggleBookmark = async (question: any) => {
     const id = getQuestionId(question);
     let updated;
     if (bookmarked.includes(id)) {
@@ -167,6 +168,23 @@ export default function StateQuestionsScreen() {
 
   const goBack = () => {
     router.back();
+  };
+
+  // Swipe gesture handler
+  const onHandlerStateChange = (event: any) => {
+    if (event.nativeEvent.state === State.END && !showQuestionOverview && stateQuestions.length > 0) {
+      const { translationX, velocityX } = event.nativeEvent;
+      
+      // Use both translation distance and velocity for better detection
+      const swipeThreshold = 50;
+      const velocityThreshold = 500;
+      
+      if ((translationX < -swipeThreshold || velocityX < -velocityThreshold) && currentQuestionIndex < stateQuestions.length - 1) {
+        goToNextQuestion();
+      } else if ((translationX > swipeThreshold || velocityX > velocityThreshold) && currentQuestionIndex > 0) {
+        goToPreviousQuestion();
+      }
+    }
   };
 
   const currentQuestion = stateQuestions[currentQuestionIndex];
@@ -496,98 +514,105 @@ export default function StateQuestionsScreen() {
         </View>
       </View>
 
-      {/* Main Content */}
-      <View style={styles.mainContent}>
-        {stateQuestions.length === 0 ? (
-          // Empty State
-          <View style={styles.emptyContainer}>
-            <Text style={styles.emptyIcon}>📍</Text>
-            <Text style={dynamicStyles.emptyTitle}>
-              {selectedState ? t.no_questions_available : t.select_state}
-            </Text>
-            <Text style={dynamicStyles.emptyDesc}>
-              {selectedState 
-                ? `${t.no_questions_found} ${selectedState}. ${t.try_different_state}`
-                : t.please_select_bundesland
-              }
-            </Text>
-          </View>
-        ) : !showQuestionOverview ? (
-          // Single Question View
-          <ScrollView 
-            style={styles.questionScrollView}
-            contentContainerStyle={styles.questionScrollContent}
-            showsVerticalScrollIndicator={false}
-          >
-            <QuestionCard
-              question={currentQuestion}
-              index={currentQuestionIndex}
-              lang={language}
-              isBookmarked={bookmarked.includes(getQuestionId(currentQuestion))}
-              onToggleBookmark={() => toggleBookmark(currentQuestion)}
-              onAnswerSelected={() => markQuestionAnswered(currentQuestion)}
-            />
-          </ScrollView>
-        ) : (
-          // Question Overview Grid
-          <View style={dynamicStyles.overviewContainer}>
+      {/* Main Content with Pan Gesture Handler */}
+      <PanGestureHandler 
+        onHandlerStateChange={onHandlerStateChange}
+        minPointers={1}
+        maxPointers={1}
+        avgTouches
+      >
+        <View style={styles.mainContent}>
+          {stateQuestions.length === 0 ? (
+            // Empty State
+            <View style={styles.emptyContainer}>
+              <Text style={styles.emptyIcon}>📍</Text>
+              <Text style={dynamicStyles.emptyTitle}>
+                {selectedState ? t.no_questions_available : t.select_state}
+              </Text>
+              <Text style={dynamicStyles.emptyDesc}>
+                {selectedState 
+                  ? `${t.no_questions_found} ${selectedState}. ${t.try_different_state}`
+                  : t.please_select_bundesland
+                }
+              </Text>
+            </View>
+          ) : !showQuestionOverview ? (
+            // Single Question View
             <ScrollView 
-              ref={overviewScrollRef}
-              style={styles.overviewScroll}
-              contentContainerStyle={styles.overviewContent}
+              style={styles.questionScrollView}
+              contentContainerStyle={styles.questionScrollContent}
               showsVerticalScrollIndicator={false}
             >
-              <Text style={dynamicStyles.overviewTitle}>{selectedState} {t.questions}</Text>
-              <View style={styles.questionsGrid}>
-                {stateQuestions.map((_, index) => {
-                  const questionId = getQuestionId(stateQuestions[index]);
-                  const isAnswered = answeredQuestions.includes(questionId);
-                  const isCurrent = index === currentQuestionIndex;
-                  
-                  return (
-                    <TouchableOpacity
-                      key={`question-${index}`}
-                      style={[
-                        dynamicStyles.questionNumberButton,
-                        isAnswered && dynamicStyles.answeredQuestion,
-                        isCurrent && dynamicStyles.currentQuestion
-                      ]}
-                      onPress={() => goToQuestion(index)}
-                      activeOpacity={0.7}
-                      accessibilityLabel={`${t.question} ${index + 1}${isAnswered ? ` (${t.answered})` : ''}${isCurrent ? ` (${t.current})` : ''}`}
-                      accessibilityRole="button"
-                    >
-                      <Text style={[
-                        dynamicStyles.questionNumberText,
-                        isAnswered && dynamicStyles.answeredQuestionText,
-                        isCurrent && dynamicStyles.currentQuestionText
-                      ]}>
-                        {index + 1}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-              
-              {/* Legend */}
-              <View style={dynamicStyles.legend}>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendColor, dynamicStyles.unansweredColor]} />
-                  <Text style={dynamicStyles.legendText}>{t.unanswered}</Text>
-                </View>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendColor, dynamicStyles.answeredColor]} />
-                  <Text style={dynamicStyles.legendText}>{t.answered}</Text>
-                </View>
-                <View style={styles.legendItem}>
-                  <View style={[styles.legendColor, dynamicStyles.currentColor]} />
-                  <Text style={dynamicStyles.legendText}>{t.current}</Text>
-                </View>
-              </View>
+              <QuestionCard
+                question={currentQuestion}
+                index={currentQuestionIndex}
+                lang={language}
+                isBookmarked={bookmarked.includes(getQuestionId(currentQuestion))}
+                onToggleBookmark={() => toggleBookmark(currentQuestion)}
+                onAnswerSelected={() => markQuestionAnswered(currentQuestion)}
+              />
             </ScrollView>
-          </View>
-        )}
-      </View>
+          ) : (
+            // Question Overview Grid
+            <View style={dynamicStyles.overviewContainer}>
+              <ScrollView 
+                ref={overviewScrollRef}
+                style={styles.overviewScroll}
+                contentContainerStyle={styles.overviewContent}
+                showsVerticalScrollIndicator={false}
+              >
+                <Text style={dynamicStyles.overviewTitle}>{selectedState} {t.questions}</Text>
+                <View style={styles.questionsGrid}>
+                  {stateQuestions.map((_, index) => {
+                    const questionId = getQuestionId(stateQuestions[index]);
+                    const isAnswered = answeredQuestions.includes(questionId);
+                    const isCurrent = index === currentQuestionIndex;
+                    
+                    return (
+                      <TouchableOpacity
+                        key={`question-${index}`}
+                        style={[
+                          dynamicStyles.questionNumberButton,
+                          isAnswered && dynamicStyles.answeredQuestion,
+                          isCurrent && dynamicStyles.currentQuestion
+                        ]}
+                        onPress={() => goToQuestion(index)}
+                        activeOpacity={0.7}
+                        accessibilityLabel={`${t.question} ${index + 1}${isAnswered ? ` (${t.answered})` : ''}${isCurrent ? ` (${t.current})` : ''}`}
+                        accessibilityRole="button"
+                      >
+                        <Text style={[
+                          dynamicStyles.questionNumberText,
+                          isAnswered && dynamicStyles.answeredQuestionText,
+                          isCurrent && dynamicStyles.currentQuestionText
+                        ]}>
+                          {index + 1}
+                        </Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+                
+                {/* Legend */}
+                <View style={dynamicStyles.legend}>
+                  <View style={styles.legendItem}>
+                    <View style={[styles.legendColor, dynamicStyles.unansweredColor]} />
+                    <Text style={dynamicStyles.legendText}>{t.unanswered}</Text>
+                  </View>
+                  <View style={styles.legendItem}>
+                    <View style={[styles.legendColor, dynamicStyles.answeredColor]} />
+                    <Text style={dynamicStyles.legendText}>{t.answered}</Text>
+                  </View>
+                  <View style={styles.legendItem}>
+                    <View style={[styles.legendColor, dynamicStyles.currentColor]} />
+                    <Text style={dynamicStyles.legendText}>{t.current}</Text>
+                  </View>
+                </View>
+              </ScrollView>
+            </View>
+          )}
+        </View>
+      </PanGestureHandler>
 
       {/* Navigation Controls */}
       {stateQuestions.length > 0 && !showQuestionOverview && (

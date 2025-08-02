@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useTranslation } from '../../src/hooks/useTranslation';
 import { questionsData } from '../../src/data/questions';
 import QuestionCard from '../../src/components/QuestionCard';
@@ -62,7 +63,7 @@ export default function TestSimulatorScreen() {
   useEffect(() => {
     const loadAppData = async () => {
       try {
-        const bookmarksData = await getItem('bookmarked_questions_v2', []);
+        const bookmarksData = await getItem('bookmarked_questions_v2', null);
         setBookmarked(bookmarksData || []);
       } catch (error) {
         console.error('Error loading app data:', error);
@@ -74,7 +75,7 @@ export default function TestSimulatorScreen() {
 
   // Timer effect
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: any;
     if (testStarted && !testCompleted && timeLeft > 0) {
       timer = setInterval(() => {
         setTimeLeft(prev => {
@@ -211,6 +212,23 @@ export default function TestSimulatorScreen() {
 
   const goBack = () => {
     router.back();
+  };
+
+  // Swipe gesture handler
+  const onHandlerStateChange = (event: any) => {
+    if (event.nativeEvent.state === State.END && testStarted && !testCompleted) {
+      const { translationX, velocityX } = event.nativeEvent;
+      
+      // Use both translation distance and velocity for better detection
+      const swipeThreshold = 50;
+      const velocityThreshold = 500;
+      
+      if ((translationX < -swipeThreshold || velocityX < -velocityThreshold) && currentQuestionIndex < testQuestions.length - 1) {
+        nextQuestion();
+      } else if ((translationX > swipeThreshold || velocityX > velocityThreshold) && currentQuestionIndex > 0) {
+        prevQuestion();
+      }
+    }
   };
 
   const currentQuestion = testQuestions[currentQuestionIndex];
@@ -618,9 +636,15 @@ export default function TestSimulatorScreen() {
         </View>
       </View>
 
-      {/* Main Content */}
-      <View style={styles.mainContent}>
-        {!testStarted ? (
+      {/* Main Content with Pan Gesture Handler */}
+      <PanGestureHandler 
+        onHandlerStateChange={onHandlerStateChange}
+        minPointers={1}
+        maxPointers={1}
+        avgTouches
+      >
+        <View style={styles.mainContent}>
+          {!testStarted ? (
           // Test Setup Screen
           <ScrollView 
             style={styles.questionScrollView}
@@ -895,8 +919,9 @@ export default function TestSimulatorScreen() {
               </View>
             </View>
           </ScrollView>
-        )}
-      </View>
+          )}
+        </View>
+      </PanGestureHandler>
 
       {/* Navigation Controls */}
       {testStarted && !testCompleted && (

@@ -3,6 +3,7 @@ import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Platform, StatusB
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 import { useTranslation } from '../../src/hooks/useTranslation';
 import { questionsData } from '../../src/data/questions';
@@ -213,6 +214,23 @@ export default function IncorrectScreen() {
     // Process correctly answered questions before leaving the screen
     await processCorrectlyAnsweredQuestions();
     router.back();
+  };
+
+  // Swipe gesture handler
+  const onHandlerStateChange = async (event: any) => {
+    if (event.nativeEvent.state === State.END && !showQuestionOverview && incorrectQuestions.length > 0) {
+      const { translationX, velocityX } = event.nativeEvent;
+      
+      // Use both translation distance and velocity for better detection
+      const swipeThreshold = 50;
+      const velocityThreshold = 500;
+      
+      if ((translationX < -swipeThreshold || velocityX < -velocityThreshold) && currentQuestionIndex < incorrectQuestions.length - 1) {
+        await goToNextQuestion();
+      } else if ((translationX > swipeThreshold || velocityX > velocityThreshold) && currentQuestionIndex > 0) {
+        await goToPreviousQuestion();
+      }
+    }
   };
 
   const currentQuestion = incorrectQuestions[currentQuestionIndex];
@@ -467,9 +485,15 @@ export default function IncorrectScreen() {
         </View>
       </View>
 
-      {/* Main Content */}
-      <View style={styles.mainContent}>
-        {incorrectQuestions.length === 0 ? (
+      {/* Main Content with Pan Gesture Handler */}
+      <PanGestureHandler 
+        onHandlerStateChange={onHandlerStateChange}
+        minPointers={1}
+        maxPointers={1}
+        avgTouches
+      >
+        <View style={styles.mainContent}>
+          {incorrectQuestions.length === 0 ? (
           // Empty State
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyIcon}>✅</Text>
@@ -560,7 +584,8 @@ export default function IncorrectScreen() {
             </ScrollView>
           </View>
         )}
-      </View>
+        </View>
+      </PanGestureHandler>
 
       {/* Navigation Controls */}
       {incorrectQuestions.length > 0 && !showQuestionOverview && (

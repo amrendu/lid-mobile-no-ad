@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Platform, StatusBar, Dimensions, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
 import { router } from 'expo-router';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 import { useTranslation } from '../../src/hooks/useTranslation';
 import { questionsData } from '../../src/data/questions';
@@ -34,14 +35,15 @@ export default function BookmarkedScreen() {
   const [bookmarkedQuestions, setBookmarkedQuestions] = useState<any[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showQuestionOverview, setShowQuestionOverview] = useState(false);
+  const overviewScrollRef = useRef<ScrollView>(null);
 
   // Load bookmarks and answered questions from storage
   useEffect(() => {
     const loadData = async () => {
-      const bookmarksData = await getItem(BOOKMARKS_KEY, []);
-      const answeredData = await getItem(ANSWERED_KEY, []);
-      setBookmarked(bookmarksData ?? []);
-      setAnsweredQuestions(answeredData ?? []);
+      const bookmarksData = await getItem(BOOKMARKS_KEY, null);
+      const answeredData = await getItem(ANSWERED_KEY, null);
+      setBookmarked(bookmarksData || []);
+      setAnsweredQuestions(answeredData || []);
 
       // Filter questions that are bookmarked
       const filtered = questionsData.filter(q => 
@@ -76,7 +78,7 @@ export default function BookmarkedScreen() {
   }, [bookmarkedQuestions.length, currentQuestionIndex]);
 
   // Mark question as answered
-  const markQuestionAnswered = async (question) => {
+  const markQuestionAnswered = async (question: any) => {
     if (!question) return;
     const id = getQuestionId(question);
     if (!answeredQuestions.includes(id)) {
@@ -87,7 +89,7 @@ export default function BookmarkedScreen() {
   };
 
   // Add/remove bookmark handler
-  const toggleBookmark = async (question) => {
+  const toggleBookmark = async (question: any) => {
     if (!question) return;
     const id = getQuestionId(question);
     let updated;
@@ -150,6 +152,23 @@ export default function BookmarkedScreen() {
 
   const goBack = () => {
     router.back();
+  };
+
+  // Swipe gesture handler
+  const onHandlerStateChange = (event: any) => {
+    if (event.nativeEvent.state === State.END && !showQuestionOverview && bookmarkedQuestions.length > 0) {
+      const { translationX, velocityX } = event.nativeEvent;
+      
+      // Use both translation distance and velocity for better detection
+      const swipeThreshold = 50;
+      const velocityThreshold = 500;
+      
+      if ((translationX < -swipeThreshold || velocityX < -velocityThreshold) && currentQuestionIndex < bookmarkedQuestions.length - 1) {
+        goToNextQuestion();
+      } else if ((translationX > swipeThreshold || velocityX > velocityThreshold) && currentQuestionIndex > 0) {
+        goToPreviousQuestion();
+      }
+    }
   };
 
   const currentQuestion = bookmarkedQuestions[currentQuestionIndex];
@@ -392,9 +411,15 @@ export default function BookmarkedScreen() {
         </View>
       </View>
 
-      {/* Main Content */}
-      <View style={styles.mainContent}>
-        {bookmarkedQuestions.length === 0 ? (
+      {/* Main Content with Pan Gesture Handler */}
+      <PanGestureHandler 
+        onHandlerStateChange={onHandlerStateChange}
+        minPointers={1}
+        maxPointers={1}
+        avgTouches
+      >
+        <View style={styles.mainContent}>
+          {bookmarkedQuestions.length === 0 ? (
           // Empty State
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyIcon}>⭐</Text>
@@ -486,7 +511,8 @@ export default function BookmarkedScreen() {
             </ScrollView>
           </View>
         )}
-      </View>
+        </View>
+      </PanGestureHandler>
 
       {/* Navigation Controls */}
       {bookmarkedQuestions.length > 0 && !showQuestionOverview && (
