@@ -32,7 +32,7 @@ export default function SupportScreen() {
       emoji: '🔧',
       color: '#3b82f6',
       description: t.maintenance_desc,
-      paypalLink: 'https://www.paypal.com/donate/?hosted_button_id=8U2QTGMTNYMXU',
+      paypalLink: 'https://www.paypal.com/donate/?hosted_button_id=9ZC8JAF69TEAC',
       benefits: [t.maintenance_desc, t.regular_updates, t.new_features, t.priority_support],
       popular: true
     },
@@ -43,7 +43,7 @@ export default function SupportScreen() {
       emoji: '🎉',
       color: '#10b981',
       description: t.party_desc,
-      paypalLink: 'https://www.paypal.com/donate/?hosted_button_id=8U2QTGMTNYMXU',
+      paypalLink: 'https://www.paypal.com/donate/?hosted_button_id=BSV4UZUJXR2QS',
       benefits: [t.party_desc, t.major_improvements, t.long_term_sustainability, t.special_thanks]
     }
   ];
@@ -507,7 +507,7 @@ export default function SupportScreen() {
                 <Text style={dynamicStyles.cryptoLabel}>{t.bitcoin_label || 'Bitcoin (BTC)'}</Text>
                 <View style={dynamicStyles.bankDetailValue}>
                   <Text style={dynamicStyles.cryptoAddressText}>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</Text>
-                  <TouchableOpacity onPress={() => copyToClipboard('bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh', 'Bitcoin Address')}>
+                  <TouchableOpacity onPress={() => copyToClipboard('bc1qvusvryndlgz2ufgmqn0qwh3nnevusrrnut4r8g', 'Bitcoin Address')}>
                     <Text style={styles.copyButton}>{copiedField === 'Bitcoin Address' ? '✅' : '📋'}</Text>
                   </TouchableOpacity>
                 </View>
@@ -517,7 +517,7 @@ export default function SupportScreen() {
                 <Text style={dynamicStyles.cryptoLabel}>{t.ethereum_label || 'Ethereum (ETH)'}</Text>
                 <View style={dynamicStyles.bankDetailValue}>
                   <Text style={dynamicStyles.cryptoAddressText}>0x742d35Cc6634C0532925a3b8D4C9db96590b5b8e</Text>
-                  <TouchableOpacity onPress={() => copyToClipboard('0x742d35Cc6634C0532925a3b8D4C9db96590b5b8e', 'Ethereum Address')}>
+                  <TouchableOpacity onPress={() => copyToClipboard('0x0FDdC4F256EF4e9E62f4fBf662907aB24F696a36', 'Ethereum Address')}>
                     <Text style={styles.copyButton}>{copiedField === 'Ethereum Address' ? '✅' : '📋'}</Text>
                   </TouchableOpacity>
                 </View>

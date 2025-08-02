@@ -552,19 +552,6 @@ const windowHeight = Dimensions.get('window').height; // For responsive sizing
             router.push('/pages/TermsOfService');
           }}
         />
-        
-        <SettingItem
-          icon="information-circle"
-          title={t.data_usage}
-          subtitle={t.data_usage_desc}
-          onPress={() => {
-            Alert.alert(
-              t.data_usage,
-              'This app stores your learning progress locally on your device. No personal data is sent to external servers.',
-              [{ text: t.ok }]
-            );
-          }}
-        />
       </SettingSection>
 
       {/* Support & Donate Section */}
@@ -573,7 +560,7 @@ const windowHeight = Dimensions.get('window').height; // For responsive sizing
           icon="cafe"
           title={t.buy_me_coffee}
           subtitle={t.buy_me_coffee_desc}
-          onPress={() => Linking.openURL('https://www.buymeacoffee.com/')}
+          onPress={() => Linking.openURL('https://ko-fi.com/amrendu')}
         />
         
         <SettingItem
@@ -591,7 +578,7 @@ const windowHeight = Dimensions.get('window').height; // For responsive sizing
           title={t.contact_support}
           subtitle={t.contact_support_desc}
           onPress={() => {
-            Linking.openURL('mailto:support@yourapp.com?subject=App Support');
+            Linking.openURL('mailto:support@einbuergerungstest-fragen24.de?subject=App Support');
           }}
         />
       </SettingSection>
