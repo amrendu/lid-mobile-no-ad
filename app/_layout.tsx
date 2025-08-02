@@ -58,6 +58,13 @@ function RootLayoutContent() {
         <Stack.Screen name="pages/support" options={{ headerShown: false }} />
         <Stack.Screen name="pages/settings" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)/settings" options={{ headerShown: false }} />
+        <Stack.Screen 
+          name="pages/TermsOfService" 
+          options={{ 
+            title: 'Terms of Service',
+            headerBackTitle: 'Back'
+          }} 
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />

@@ -132,13 +132,24 @@ export default function AllQuestionsScreen() {
   };
 
 
+  // Reload correct/incorrect status from storage
+  const reloadAnswerStatus = async () => {
+    const correctData = await getItem(CORRECT_KEY, []);
+    const incorrectData = await getItem(INCORRECT_KEY, []);
+    setCorrectQuestions(correctData ?? []);
+    setIncorrectQuestions(incorrectData ?? []);
+  };
+
   // Toggle question overview
-  const toggleQuestionOverview = () => {
+  const toggleQuestionOverview = async () => {
     setShowQuestionOverview(prev => {
       const newValue = !prev;
       
-      // If opening overview, scroll to current question after a short delay
+      // If opening overview, reload answer status and scroll to current question after a short delay
       if (newValue) {
+        // Reload the correct/incorrect status from storage
+        reloadAnswerStatus();
+        
         setTimeout(() => {
           const questionsPerRow = 8; // Approximate
           const currentRow = Math.floor(currentQuestionIndex / questionsPerRow);

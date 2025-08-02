@@ -39,7 +39,8 @@ import {
   InfoIcon,
   CheckIcon,
   GermanyIcon,
-  SettingsIcon
+  SettingsIcon,
+  GridIcon
 } from '../constants/Icons';
 
 const { width } = Dimensions.get('window');
@@ -362,6 +363,9 @@ const availableLanguages = ['EN', 'DE', 'TR'];
       fontSize: 32,
       textAlign: 'center',
     },
+    overviewCard: {
+      marginTop: Spacing.sm,
+    },
   });
 
   return (
@@ -437,28 +441,54 @@ const availableLanguages = ['EN', 'DE', 'TR'];
             
             <View style={styles.navigationGrid}>
               {navigationItems.map((item, index) => (
-                <TouchableOpacity
-                  key={item.id}
-                  onPress={() => handleNavigation(item.route)}
-                  activeOpacity={0.8}
-                  style={dynamicStyles.navCard}
-                >
-                  <View style={[styles.navCardIcon, { backgroundColor: item.color }]}>
-                    <item.IconComponent size={24} color="#ffffff" />
-                  </View>
-                  
-                  <View style={styles.navCardContent}>
-                    <Text style={dynamicStyles.navCardTitle}>{item.title}</Text>
-                    <Text style={dynamicStyles.navCardDesc}>{item.description}</Text>
-                    <View style={[styles.navCardStatsContainer, { backgroundColor: item.color + '20' }]}>
-                      <Text style={[styles.navCardStats, { color: item.color }]}>{item.stats}</Text>
+                <React.Fragment key={item.id}>
+                  <TouchableOpacity
+                    onPress={() => handleNavigation(item.route)}
+                    activeOpacity={0.8}
+                    style={dynamicStyles.navCard}
+                  >
+                    <View style={[styles.navCardIcon, { backgroundColor: item.color }]}>
+                      <item.IconComponent size={24} color="#ffffff" />
                     </View>
-                  </View>
+                    
+                    <View style={styles.navCardContent}>
+                      <Text style={dynamicStyles.navCardTitle}>{item.title}</Text>
+                      <Text style={dynamicStyles.navCardDesc}>{item.description}</Text>
+                      <View style={[styles.navCardStatsContainer, { backgroundColor: item.color + '20' }]}>
+                        <Text style={[styles.navCardStats, { color: item.color }]}>{item.stats}</Text>
+                      </View>
+                    </View>
+                    
+                    <View style={[styles.navCardArrow, { backgroundColor: item.color + '20' }]}>
+                      <Text style={[styles.navCardArrowText, { color: item.color }]}>→</Text>
+                    </View>
+                  </TouchableOpacity>
                   
-                  <View style={[styles.navCardArrow, { backgroundColor: item.color + '20' }]}>
-                    <Text style={[styles.navCardArrowText, { color: item.color }]}>→</Text>
-                  </View>
-                </TouchableOpacity>
+                  {/* Add overview row after "All Questions" */}
+                  {item.id === 'all' && (
+                    <TouchableOpacity
+                      onPress={() => handleNavigation('/pages/all-questions?overview=true')}
+                      activeOpacity={0.8}
+                      style={[dynamicStyles.navCard, dynamicStyles.overviewCard]}
+                    >
+                      <View style={[styles.navCardIcon, { backgroundColor: '#6366f1' }]}>
+                        <GridIcon size={24} color="#ffffff" />
+                      </View>
+                      
+                      <View style={styles.navCardContent}>
+                        <Text style={dynamicStyles.navCardTitle}>{t.questions_overview || 'Questions Overview'}</Text>
+                        <Text style={dynamicStyles.navCardDesc}>{t.overview_desc || 'Visual grid showing all 300 questions with color-coded progress. See which questions you have answered correctly.'}</Text>
+                        <View style={[styles.navCardStatsContainer, { backgroundColor: '#6366f1' + '20' }]}>
+                          <Text style={[styles.navCardStats, { color: '#6366f1' }]}>{correctCount}/{totalQuestions} {t.correct || 'correct'}</Text>
+                        </View>
+                      </View>
+                      
+                      <View style={[styles.navCardArrow, { backgroundColor: '#6366f1' + '20' }]}>
+                        <Text style={[styles.navCardArrowText, { color: '#6366f1' }]}>→</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                </React.Fragment>
               ))}
             </View>
           </Animated.View>

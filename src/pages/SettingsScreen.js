@@ -526,8 +526,8 @@ const windowHeight = Dimensions.get('window').height; // For responsive sizing
         
         <SettingItem
           icon="refresh-outline"
-          title={t.clear_all_progress}
-          subtitle={t.clear_all_progress_desc}
+          title={t.clear_correct_answers}
+          subtitle={t.clear_correct_answers_desc}
           onPress={handleClearProgress}
         />
       </SettingSection>
@@ -549,8 +549,7 @@ const windowHeight = Dimensions.get('window').height; // For responsive sizing
           title={t.terms_of_service}
           subtitle={t.terms_of_service_desc}
           onPress={() => {
-            // Replace with your actual terms URL
-            Linking.openURL('https://your-terms-url.com');
+            router.push('/pages/TermsOfService');
           }}
         />
         

@@ -187,6 +187,10 @@ export const translations = {
     view_bookmarked_questions: "View bookmarked questions",
     view_questions_to_review: "View questions to review",
     
+    // Questions Overview
+    questions_overview: "Questions Overview",
+    overview_desc: "Visual grid showing all 300 questions progress",
+    
     // Missing keys from original translations
     all_questions_title: "All 300 Questions",
     all_300_questions: "All 300 Questions Overview",
@@ -253,8 +257,8 @@ export const translations = {
     clear_bookmarks_desc: "Clear all bookmarked questions",
     clear_incorrect_answers: "Clear Incorrect Answers",
     clear_incorrect_answers_desc: "Clear all incorrectly answered questions",
-    clear_all_progress: "Clear All Progress",
-    clear_all_progress_desc: "Clear all answered questions and progress",
+    clear_correct_answers: "Clear Correct Answers",
+    clear_correct_answers_desc: "Clear all correctly answered questions",
     privacy: "Privacy",
     privacy_policy: "Privacy Policy",
     privacy_policy_desc: "Learn how we protect your data",
@@ -431,6 +435,10 @@ export const translations = {
     view_bookmarked_questions: "Gemerkte Fragen anzeigen",
     view_questions_to_review: "Zu überprüfende Fragen anzeigen",
     
+    // Questions Overview
+    questions_overview: "Fragen-Übersicht",
+    overview_desc: "Visuelles Raster zeigt alle 300 Fragen Fortschritt",
+    
     // Missing keys from original translations
     all_questions_title: "Alle 300 Fragen",
     all_300_questions: "Übersicht aller 300 Fragen",
@@ -497,8 +505,8 @@ export const translations = {
     clear_bookmarks_desc: "Alle gemerkten Fragen löschen",
     clear_incorrect_answers: "Falsche Antworten löschen",
     clear_incorrect_answers_desc: "Alle falsch beantworteten Fragen löschen",
-    clear_all_progress: "Gesamten Fortschritt löschen",
-    clear_all_progress_desc: "Alle beantworteten Fragen und Fortschritt löschen",
+    clear_correct_answers: "Richtige Antworten löschen",
+    clear_correct_answers_desc: "Alle richtig beantworteten Fragen löschen",
     privacy: "Datenschutz",
     privacy_policy: "Datenschutzrichtlinie",
     privacy_policy_desc: "Erfahren Sie, wie wir Ihre Daten schützen",
@@ -675,6 +683,10 @@ export const translations = {
     view_bookmarked_questions: "İşaretli soruları görüntüle",
     view_questions_to_review: "Gözden geçirilecek soruların görüntüle",
     
+    // Questions Overview
+    questions_overview: "Sorular Genel Bakış",
+    overview_desc: "Tüm 300 soru ilerlemesini gösteren görsel ızgara",
+    
     // Missing keys from original translations
     all_questions_title: "Tüm 300 Soru",
     all_300_questions: "Tüm 300 Soru Özeti",
@@ -741,8 +753,8 @@ export const translations = {
     clear_bookmarks_desc: "Tüm işaretlenen soruları temizle",
     clear_incorrect_answers: "Yanlış Cevapları Temizle",
     clear_incorrect_answers_desc: "Tüm yanlış cevaplanmış soruları temizle",
-    clear_all_progress: "Tüm İlerlemeyi Temizle",
-    clear_all_progress_desc: "Tüm cevaplanmış sorular ve ilerlemeyi temizle",
+    clear_correct_answers: "Doğru Cevapları Temizle",
+    clear_correct_answers_desc: "Tüm doğru cevaplanmış soruları temizle",
     privacy: "Gizlilik",
     privacy_policy: "Gizlilik Politikası",
     privacy_policy_desc: "Verilerinizi nasıl koruduğumuzu öğrenin",
