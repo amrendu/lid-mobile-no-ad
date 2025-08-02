@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, FlatList, Platform } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { useTranslation } from '../hooks/useTranslation';
@@ -13,8 +13,27 @@ const bundeslaender = [
 export default function StateQuestionsScreen() {
   const { t } = useTranslation();
   const [selectedState, setSelectedState] = useState('');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const flatListRef = useRef(null);
 
   const filteredQuestions = selectedState ? questionsData.filter(q => q.bundesland === selectedState) : [];
+
+
+  const onViewableItemsChanged = useRef(({ viewableItems }) => {
+    if (viewableItems.length > 0) {
+      setCurrentQuestionIndex(viewableItems[0].index || 0);
+    }
+  }).current;
+
+  const viewabilityConfig = useRef({
+    itemVisiblePercentThreshold: 50,
+  }).current;
+
+  // Reset current question index when state changes
+  const handleStateChange = (value) => {
+    setSelectedState(value || '');
+    setCurrentQuestionIndex(0);
+  };
 
   return (
     <View style={styles.container}>
@@ -23,7 +42,7 @@ export default function StateQuestionsScreen() {
       <View style={styles.pickerContainer}>
         <RNPickerSelect
           value={selectedState}
-          onValueChange={(value) => setSelectedState(value || '')}
+          onValueChange={handleStateChange}
           items={bundeslaender.map(state => ({
             label: state,
             value: state,
@@ -47,13 +66,30 @@ export default function StateQuestionsScreen() {
         />
       </View>
       <FlatList
+        ref={flatListRef}
         data={filteredQuestions}
         keyExtractor={(_, idx) => idx.toString()}
         renderItem={({ item, index }) => (
-          <QuestionCard question={item} index={index} />
+          <QuestionCard
+            question={item}
+            index={index}
+          />
         )}
         contentContainerStyle={{ paddingBottom: 32 }}
         ListEmptyComponent={<Text style={styles.empty}>{t.no_questions_match || 'No questions for this state.'}</Text>}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
+        getItemLayout={(data, index) => ({
+          length: 200, // Approximate item height
+          offset: 200 * index,
+          index,
+        })}
+        onScrollToIndexFailed={(info) => {
+          const wait = new Promise(resolve => setTimeout(resolve, 500));
+          wait.then(() => {
+            flatListRef.current?.scrollToIndex({ index: info.index, animated: true });
+          });
+        }}
       />
     </View>
   );
