@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { getItem, setItem } from '../../src/utils/storage';
-import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Platform, StatusBar, Alert, Clipboard, Linking } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Platform, Alert, Clipboard, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
-import { router } from 'expo-router';
 import { useTranslation } from '../../src/hooks/useTranslation';
 import { useTheme } from '../../contexts/ThemeContext';
 
 export default function SupportScreen() {
   const { colors, theme } = useTheme();
-  const { t } = useTranslation();
+  const translation = useTranslation();
+  const t = (translation as any).t || {};
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('kofi');
   const [selectedAmount, setSelectedAmount] = useState('10');
   const [copiedField, setCopiedField] = useState('');
@@ -70,15 +69,15 @@ export default function SupportScreen() {
     reference: `LiD-App-Support-${new Date().getFullYear()}`
   };
 
-  const handleDonate = (paypalLink, optionId, amount) => {
+  const handleDonate = (paypalLink: string, optionId: string, amount: string) => {
     setSelectedAmount(optionId);
     Linking.openURL(paypalLink);
   };
 
-  const copyToClipboard = (text, fieldName) => {
+  const copyToClipboard = (text: string, fieldName: string) => {
     Clipboard.setString(text);
     setCopiedField(fieldName);
-    Alert.alert(t.copied, `${fieldName} ${t.copied_to_clipboard}`);
+    Alert.alert(t.copied || 'Copied', `${fieldName} ${t.copied_to_clipboard || 'copied to clipboard'}`);
     setTimeout(() => setCopiedField(''), 2000);
   };
 
@@ -87,46 +86,11 @@ export default function SupportScreen() {
     return `LiD-${selectedAmount}EUR-${timestamp}`;
   };
 
-  const goBack = () => {
-    router.back();
-  };
-
   // Create dynamic styles based on current theme
   const dynamicStyles = StyleSheet.create({
     container: { 
       flex: 1, 
       backgroundColor: colors.background 
-    },
-    headerBackground: {
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-    },
-    backButton: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
-      backgroundColor: colors.infoBackground,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: colors.tint,
-      shadowColor: colors.tint,
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      shadowOffset: { width: 0, height: 1 },
-      elevation: 1,
-    },
-    backButtonText: {
-      fontSize: 18,
-      color: colors.tint,
-      fontWeight: 'bold',
-    },
-    appBarTitle: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: colors.text,
-      textAlign: 'center',
-      letterSpacing: 0.1,
     },
     title: {
       fontSize: 20,
@@ -299,47 +263,12 @@ export default function SupportScreen() {
   });
 
   return (
-    <SafeAreaView style={dynamicStyles.container} edges={['top']}>
-      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor="transparent" translucent />
-      
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        {Platform.OS === 'ios' ? (
-          <BlurView intensity={90} style={styles.blurView} tint={theme === 'dark' ? 'dark' : 'light'} />
-        ) : (
-          <View style={dynamicStyles.headerBackground} />
-        )}
-      </View>
-      
-      {/* Compact App Bar */}
-      <View style={styles.appBar}>
-        <View style={styles.appBarContent}>
-          <TouchableOpacity 
-            style={dynamicStyles.backButton}
-            onPress={goBack}
-            accessibilityLabel={t.go_back}
-            activeOpacity={0.7}
-          >
-            <Text style={dynamicStyles.backButtonText}>←</Text>
-          </TouchableOpacity>
-          <View style={styles.titleContainer}>
-            <Text style={dynamicStyles.appBarTitle} numberOfLines={1} ellipsizeMode="tail">
-              {t.support_title}
-            </Text>
-          </View>
-          <View style={styles.rightActions}>
-            <View style={styles.placeholderButton} />
-          </View>
-        </View>
-      </View>
-
-      {/* Main Content */}
-      <View style={styles.mainContent}>
-        <ScrollView 
-          style={styles.questionScrollView}
-          contentContainerStyle={styles.questionScrollContent}
-          showsVerticalScrollIndicator={false}
-        >
+    <SafeAreaView style={dynamicStyles.container} edges={['left', 'right', 'bottom']}>
+      <ScrollView 
+        style={styles.questionScrollView}
+        contentContainerStyle={styles.questionScrollContent}
+        showsVerticalScrollIndicator={false}
+      >
           {/* Header Section */}
           <View style={styles.headerSection}>
             <View style={styles.heartContainer}>
@@ -557,59 +486,12 @@ export default function SupportScreen() {
             <Text style={dynamicStyles.thankYouTitle}>{t.thank_you_title || 'Thank You! 🙏'}</Text>
             <Text style={dynamicStyles.thankYouDesc}>{t.thank_you_desc || 'Every contribution, no matter the size, helps keep this app running and improving. Your support makes a real difference in helping people achieve their German citizenship dreams.'}</Text>
           </View>
-        </ScrollView>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: Platform.OS === 'ios' ? 70 : 60,
-    zIndex: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  blurView: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  appBar: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0,
-    paddingHorizontal: 12,
-    paddingBottom: 6,
-    zIndex: 20,
-  },
-  appBarContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: 44,
-    paddingVertical: 2,
-  },
-  titleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rightActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  placeholderButton: {
-    minHeight: 36,
-    minWidth: 36,
-  },
-  mainContent: {
-    flex: 1,
-    marginTop: 2,
-  },
   questionScrollView: {
     flex: 1,
   },

@@ -4,14 +4,11 @@ import {
   Text, 
   StyleSheet, 
   TouchableOpacity, 
-  Platform, 
-  StatusBar,
   ScrollView,
   Alert
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useTranslation } from '../../src/hooks/useTranslation';
 import { questionsData } from '../../src/data/questions';
@@ -47,8 +44,10 @@ function getQuestionId(q: { question: string; options: string[]; answer?: string
 
 export default function TestSimulatorScreen() {
   const { colors, theme } = useTheme();
-  const { t } = useTranslation();
+  const translation = useTranslation();
+  const t = (translation as any).t || {};
   const { language } = useLanguage();
+  const navigation = useNavigation();
   const [selectedState, setSelectedState] = useState(bundeslaender[0] || '');
   const [testQuestions, setTestQuestions] = useState<any[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -240,54 +239,6 @@ export default function TestSimulatorScreen() {
       flex: 1, 
       backgroundColor: colors.background,
     },
-    headerBackground: {
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-    },
-    backButton: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
-      backgroundColor: colors.infoBackground,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: colors.tint,
-      shadowColor: colors.tint,
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      shadowOffset: { width: 0, height: 1 },
-      elevation: 1,
-    },
-    backButtonText: {
-      fontSize: 18,
-      color: colors.tint,
-      fontWeight: 'bold',
-    },
-    appBarTitle: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: colors.text,
-      textAlign: 'center',
-      letterSpacing: 0.1,
-    },
-    counterText: {
-      fontSize: 12,
-      fontWeight: '500',
-      color: colors.textSecondary,
-      textAlign: 'center',
-      marginTop: 2,
-    },
-    resetButton: {
-      backgroundColor: colors.tint,
-      paddingHorizontal: 8,
-      paddingVertical: 6,
-      borderRadius: 16,
-      minHeight: 32,
-      minWidth: 32,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     setupTitle: {
       fontSize: 20,
       fontWeight: 'bold',
@@ -349,9 +300,9 @@ export default function TestSimulatorScreen() {
       marginBottom: 16,
     },
     picker: {
-      height: Platform.OS === 'android' ? 50 : 44, 
+      height: 44, 
       width: '100%',
-      color: Platform.OS === 'android' ? colors.text : 'transparent',
+      color: colors.text,
     },
     pickerDisplayText: {
       fontSize: 16,
@@ -548,7 +499,7 @@ export default function TestSimulatorScreen() {
       justifyContent: 'space-between',
       paddingHorizontal: 16,
       paddingTop: 12,
-      paddingBottom: Platform.OS === 'ios' ? 20 : 16,
+      paddingBottom: 16,
       backgroundColor: colors.background,
       borderTopWidth: 1,
       borderTopColor: colors.border,
@@ -588,53 +539,7 @@ export default function TestSimulatorScreen() {
   });
 
   return (
-    <SafeAreaView style={dynamicStyles.container} edges={['top']}>
-      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor="transparent" translucent />
-      
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        {Platform.OS === 'ios' ? (
-          <BlurView intensity={90} style={styles.blurView} tint={theme === 'dark' ? 'dark' : 'light'} />
-        ) : (
-          <View style={dynamicStyles.headerBackground} />
-        )}
-      </View>
-      
-      {/* App Bar */}
-      <View style={styles.appBar}>
-        <View style={styles.appBarContent}>
-          <TouchableOpacity 
-            style={dynamicStyles.backButton}
-            onPress={goBack}
-                accessibilityLabel={t.go_back}
-            activeOpacity={0.7}
-          >
-            <Text style={dynamicStyles.backButtonText}>←</Text>
-          </TouchableOpacity>
-          <View style={styles.titleContainer}>
-            <Text style={dynamicStyles.appBarTitle} numberOfLines={1} ellipsizeMode="tail">
-              {t.test_simulator_title}
-            </Text>
-            {testStarted && (
-              <Text style={dynamicStyles.counterText}>
-                {testCompleted ? t.test_completed : `Q${currentQuestionIndex + 1}/${testQuestions.length} • ${formatTime(timeLeft)}`}
-              </Text>
-            )}
-          </View>
-          <View style={styles.rightActions}>
-            {testStarted && (
-              <TouchableOpacity 
-                style={dynamicStyles.resetButton}
-                onPress={resetTest}
-                accessibilityLabel={t.reset_test}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.resetButtonText}>🔄</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        </View>
-      </View>
+    <SafeAreaView style={dynamicStyles.container} edges={['left', 'right', 'bottom']}>
 
       {/* Main Content with Pan Gesture Handler */}
       <PanGestureHandler 
@@ -655,7 +560,7 @@ export default function TestSimulatorScreen() {
               {/* Header Section */}
               <View style={styles.setupHeader}>
                 <View style={styles.iconContainer}>
-                  <Text style={styles.iconEmoji}>🎯</Text>
+                  <Text style={styles.iconEmoji}>🇩🇪</Text>
                 </View>
                 <Text style={dynamicStyles.setupTitle}>{t.test_simulator_title}</Text>
                 <Text style={dynamicStyles.setupDesc}>{t.test_simulator_desc}</Text>
@@ -718,7 +623,7 @@ export default function TestSimulatorScreen() {
                         height: 50,
                       },
                       iconContainer: {
-                        top: Platform.OS === 'ios' ? 15 : 20,
+                        top: 15,
                         right: 15,
                       },
                       placeholder: {
@@ -963,50 +868,8 @@ export default function TestSimulatorScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: Platform.OS === 'ios' ? 70 : 60,
-    zIndex: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  blurView: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  appBar: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0,
-    paddingHorizontal: 12,
-    paddingBottom: 6,
-    zIndex: 20,
-  },
-  appBarContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: 44,
-    paddingVertical: 2,
-  },
-  titleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rightActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  resetButtonText: {
-    fontSize: 14,
-  },
   mainContent: {
     flex: 1,
-    marginTop: 2,
   },
   questionScrollView: {
     flex: 1,

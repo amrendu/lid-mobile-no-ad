@@ -7,7 +7,6 @@ import { useLanguage } from '../utils/languageContext';
 import { questionsData } from '../data/questions';
 import QuestionCard from '../components/QuestionCard';
 import ScreenWrapper from '../components/ScreenWrapper';
-import AppHeader from '../components/AppHeader';
 
 // Extract unique Bundesländer from questions
 const bundeslaender = [
@@ -25,7 +24,7 @@ function getRandomTestQuestions(selectedState) {
 
 export default function TestSimulatorScreen() {
   const { t } = useTranslation();
-  const { language, setLanguage } = useLanguage();
+  const { language } = useLanguage();
   const [fadeAnim] = useState(new Animated.Value(0));
   const [selectedState, setSelectedState] = useState(bundeslaender[0] || '');
   const [testQuestions, setTestQuestions] = useState([]);
@@ -40,11 +39,6 @@ export default function TestSimulatorScreen() {
     }).start();
   }, []);
 
-  const toggleLanguage = () => {
-    const nextLanguage = language === 'EN' ? 'DE' : language === 'DE' ? 'TR' : 'EN';
-    setLanguage(nextLanguage);
-  };
-
   const startTest = () => {
     setTestQuestions(getRandomTestQuestions(selectedState));
     setCurrent(0);
@@ -56,14 +50,6 @@ export default function TestSimulatorScreen() {
 
   return (
     <ScreenWrapper>
-      <AppHeader
-        title={t.test_simulator_title}
-        subtitle={started ? `${t.question} ${current + 1} ${t.of} ${testQuestions.length}` : t.practice_test_mode}
-        language={language}
-        onLanguageToggle={toggleLanguage}
-        fadeAnim={fadeAnim}
-      />
-
       <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
         {!started ? (
           <ScrollView contentContainerStyle={styles.setupContainer}>

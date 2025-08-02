@@ -12,7 +12,6 @@ import {
   Modal,
   FlatList,
   Pressable,
-  StatusBar,
   Dimensions 
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -22,7 +21,6 @@ import { useLanguage } from '../utils/languageContext';
 import { resetAllData, getStats } from '../utils/statsManager';
 import { getItem, setItem, removeItem } from '../utils/storage';
 import { useTheme } from '../../contexts/ThemeContext';
-import { BackIcon, SettingsIcon } from '../../constants/Icons';
 import { router } from 'expo-router';
 
 export default function SettingsScreen() {
@@ -252,37 +250,6 @@ export default function SettingsScreen() {
       flex: 1,
       backgroundColor: colors.background,
     },
-    headerContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: 16,
-      backgroundColor: colors.backgroundSecondary,
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      borderBottomColor: colors.border,
-    },
-    backButton: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
-      backgroundColor: colors.card,
-      alignItems: 'center',
-      justifyContent: 'center',
-      elevation: 1,
-    },
-    appBarTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: colors.text,
-      flex: 1,
-      textAlign: 'center',
-    },
-    settingsIcon: {
-      width: 36,
-      height: 36,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
     container: {
       flex: 1,
       backgroundColor: colors.backgroundSecondary,
@@ -430,24 +397,7 @@ export default function SettingsScreen() {
 const windowHeight = Dimensions.get('window').height; // For responsive sizing
 
   return (
-    <SafeAreaView style={dynamicStyles.safeArea} edges={['top', 'left', 'right']}>
-      <StatusBar 
-        barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
-        backgroundColor={colors.background}
-        translucent={false}
-      />
-
-      {/* App Bar */}  
-      <View style={dynamicStyles.headerContainer}>
-        <TouchableOpacity style={dynamicStyles.backButton} onPress={router.back}>
-          <BackIcon size={24} color={colors.tint} />
-        </TouchableOpacity>
-        <Text style={dynamicStyles.appBarTitle}>{t.settings}</Text>
-        <View style={dynamicStyles.settingsIcon}>
-          <SettingsIcon size={24} color={colors.tint} />
-        </View>
-      </View>
-
+    <SafeAreaView style={dynamicStyles.safeArea} edges={['left', 'right', 'bottom']}>
       <ScrollView style={dynamicStyles.container}>
       {/* Preferences Section */}
       <SettingSection title={t.preferences}>
@@ -596,19 +546,6 @@ const windowHeight = Dimensions.get('window').height; // For responsive sizing
           subtitle={t.reset_all_data_desc}
           onPress={handleResetAll}
         />
-        
-        <SettingItem
-          icon="bug"
-          title={t.debug_info}
-          subtitle={t.debug_info_desc}
-          onPress={() => {
-            Alert.alert(
-              t.debug_info,
-              `App Version: 1.0.0\nBuild: Development\nLanguage: ${language}\nStats: ${JSON.stringify(stats, null, 2)}`,
-              [{ text: t.ok }]
-            );
-          }}
-        />
       </SettingSection>
 
       {/* Language Picker Modal for Android */}
@@ -636,8 +573,8 @@ const windowHeight = Dimensions.get('window').height; // For responsive sizing
 
       {/* App Info */}
       <View style={dynamicStyles.appInfo}>
-        <Text style={dynamicStyles.appVersion}>LID Mobile App v1.0.0</Text>
-        <Text style={dynamicStyles.appCopyright}>© 2024 Your Company</Text>
+        <Text style={dynamicStyles.appVersion}>Einbuergerungstest/LiD 2025 v1.0.0</Text>
+        <Text style={dynamicStyles.appCopyright}>2025 @ einbuergerungstest-fragen24.de</Text>
       </View>
       </ScrollView>
     </SafeAreaView>

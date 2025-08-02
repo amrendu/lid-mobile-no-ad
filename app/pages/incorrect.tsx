@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Platform, StatusBar, Dimensions, BackHandler, Alert } from 'react-native';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { TouchableOpacity, StyleSheet, View, Text, ScrollView, Dimensions, BackHandler, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 import { useTranslation } from '../../src/hooks/useTranslation';
@@ -31,8 +30,10 @@ const ANSWERED_KEY = 'answered_questions_v2';
 
 export default function IncorrectScreen() {
   const { colors, theme } = useTheme();
-  const { t } = useTranslation();
+  const translation = useTranslation();
+  const t = (translation as any).t || {};
   const { language } = useLanguage();
+  const navigation = useNavigation();
   const [incorrect, setIncorrect] = useState<string[]>([]);
   const [bookmarked, setBookmarked] = useState<string[]>([]);
   const [answeredQuestions, setAnsweredQuestions] = useState<string[]>([]);
@@ -166,7 +167,7 @@ export default function IncorrectScreen() {
   };
 
   // Toggle question overview
-  const toggleQuestionOverview = () => {
+  const toggleQuestionOverview = useCallback(() => {
     setShowQuestionOverview(prev => {
       const newValue = !prev;
       
@@ -186,7 +187,14 @@ export default function IncorrectScreen() {
       
       return newValue;
     });
-  };
+  }, [currentQuestionIndex]);
+
+  // Set up navigation params to communicate with header button
+  useEffect(() => {
+    if (incorrectQuestions.length > 0) {
+      (navigation as any).setParams({ toggleOverview: toggleQuestionOverview });
+    }
+  }, [navigation, toggleQuestionOverview, incorrectQuestions.length]);
 
   // Clear all incorrect answers
   const clearIncorrect = () => {
@@ -404,7 +412,7 @@ export default function IncorrectScreen() {
       justifyContent: 'space-between',
       paddingHorizontal: 16,
       paddingTop: 12,
-      paddingBottom: Platform.OS === 'ios' ? 20 : 16,
+      paddingBottom: 16,
       backgroundColor: colors.background,
       borderTopWidth: 1,
       borderTopColor: colors.border,
@@ -443,47 +451,22 @@ export default function IncorrectScreen() {
     disabledButtonText: {
       color: colors.textMuted,
     },
+    progressContainer: {
+      flex: 0.5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 8,
+    },
+    progressText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: colors.text,
+      textAlign: 'center',
+    },
   });
 
   return (
-    <SafeAreaView style={dynamicStyles.container} edges={['top']}>
-      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor="transparent" translucent />
-      
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        {Platform.OS === 'ios' ? (
-          <BlurView intensity={90} style={styles.blurView} tint={theme === 'dark' ? 'dark' : 'light'} />
-        ) : (
-          <View style={dynamicStyles.headerBackground} />
-        )}
-      </View>
-      
-      {/* Compact App Bar with Integrated Counter */}
-      <View style={styles.appBar}>
-        <View style={styles.appBarContent}>
-          <TouchableOpacity 
-            style={dynamicStyles.backButton}
-            onPress={goBack}
-            accessibilityLabel={t.go_back}
-            activeOpacity={0.7}
-          >
-            <Text style={dynamicStyles.backButtonText}>←</Text>
-          </TouchableOpacity>
-          <View style={styles.titleContainer}>
-            <Text style={dynamicStyles.appBarTitle} numberOfLines={1} ellipsizeMode="tail">
-              {t.nav_incorrect || 'Incorrect'}
-            </Text>
-            {incorrectQuestions.length > 0 && (
-              <Text style={dynamicStyles.counterText}>
-                {showQuestionOverview ? `${incorrectQuestions.length} ${t.questions}` : `Q${currentQuestionIndex + 1}/${incorrectQuestions.length}`}
-              </Text>
-            )}
-          </View>
-          <View style={styles.rightActions}>
-            <View style={styles.placeholderButton} />
-          </View>
-        </View>
-      </View>
+    <SafeAreaView style={dynamicStyles.container} edges={['left', 'right', 'bottom']}>
 
       {/* Main Content with Pan Gesture Handler */}
       <PanGestureHandler 
@@ -601,6 +584,13 @@ export default function IncorrectScreen() {
             </Text>
           </TouchableOpacity>
           
+          {/* Progress Indicator */}
+          <View style={dynamicStyles.progressContainer}>
+            <Text style={dynamicStyles.progressText}>
+              {currentQuestionIndex + 1}/{incorrectQuestions.length}
+            </Text>
+          </View>
+          
           <TouchableOpacity 
             style={[dynamicStyles.navButton, currentQuestionIndex === incorrectQuestions.length - 1 && dynamicStyles.disabledButton]}
             onPress={goToNextQuestion}
@@ -618,51 +608,8 @@ export default function IncorrectScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: Platform.OS === 'ios' ? 70 : 60,
-    zIndex: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  blurView: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  appBar: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0,
-    paddingHorizontal: 12,
-    paddingBottom: 6,
-    zIndex: 20,
-  },
-  appBarContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: 44,
-    paddingVertical: 2,
-  },
-  titleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rightActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  placeholderButton: {
-    minHeight: 36,
-    minWidth: 36,
-  },
   mainContent: {
     flex: 1,
-    marginTop: 2,
   },
   questionScrollView: {
     flex: 1,

@@ -3,7 +3,6 @@ import { View, StyleSheet, FlatList, Animated } from 'react-native';
 import { questionsData } from '../data/questions';
 import QuestionCard from '../components/QuestionCard';
 import ScreenWrapper from '../components/ScreenWrapper';
-import AppHeader from '../components/AppHeader';
 import { useTranslation } from '../hooks/useTranslation';
 
 export default function AllQuestionsScreen() {
@@ -20,11 +19,6 @@ export default function AllQuestionsScreen() {
     }).start();
   }, []);
 
-  const toggleLanguage = () => {
-    setLanguage(prev => prev === 'EN' ? 'DE' : 'EN');
-  };
-
-
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
       setCurrentQuestionIndex(viewableItems[0].index || 0);
@@ -37,14 +31,6 @@ export default function AllQuestionsScreen() {
 
   return (
     <ScreenWrapper>
-      <AppHeader
-        title={t.all_questions_title}
-        subtitle={`${questionsData.length} ${t.questions_available}`}
-        language={language}
-        onLanguageToggle={toggleLanguage}
-        fadeAnim={fadeAnim}
-      />
-
       <Animated.View style={[styles.content, { opacity: fadeAnim }]}>
         <FlatList
           ref={flatListRef}

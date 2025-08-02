@@ -392,23 +392,20 @@ const availableLanguages = ['EN', 'DE', 'TR'];
           <View style={styles.appBarContent}>
             <View style={styles.appBarLeft}>
               <View style={dynamicStyles.appIcon}>
-                <AppIcon size={20} color={colors.tint} />
+                <Text style={styles.appIconFlag}>🇩🇪</Text>
               </View>
               <View style={styles.titleContainer}>
-                <Text style={dynamicStyles.appTitle}>{t.title || 'Leben in Deutschland'}</Text>
+                <Text style={dynamicStyles.appTitle}>Einbuergerungstest/LiD 2025</Text>
               </View>
             </View>
             <View style={styles.headerButtons}>
               <TouchableOpacity 
-                style={dynamicStyles.langButton}
+                style={dynamicStyles.themeButton}
                 onPress={() => handleNavigation('/pages/settings')}
-                accessibilityLabel={t.open_settings}
+                accessibilityLabel="Open Settings"
                 activeOpacity={0.7}
               >
                 <SettingsIcon size={16} color={colors.tint} />
-                <Text style={dynamicStyles.langButtonText}>
-                  {t.settings}
-                </Text>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={dynamicStyles.themeButton}
@@ -738,5 +735,9 @@ const styles = StyleSheet.create({
   },
   welcomeIconContainer: {
     marginBottom: Spacing.md,
+  },
+  appIconFlag: {
+    fontSize: 20,
+    textAlign: 'center',
   },
 });

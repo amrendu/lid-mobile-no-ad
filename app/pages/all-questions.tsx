@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { TouchableOpacity, Animated, StyleSheet, View, Text, ScrollView, Platform, StatusBar, Dimensions, BackHandler } from 'react-native';
+import { TouchableOpacity, Animated, StyleSheet, View, Text, ScrollView, Dimensions, BackHandler } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { BlurView } from 'expo-blur';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, useNavigation } from 'expo-router';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
 import { questionsData } from '../../src/data/questions';
@@ -11,7 +10,6 @@ import { getItem, setItem } from '../../src/utils/storage';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useTranslation } from '../../src/hooks/useTranslation';
 import { useLanguage } from '../../src/utils/languageContext';
-import { GridIcon } from '../../constants/Icons';
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -33,7 +31,9 @@ const INCORRECT_KEY = 'incorrect_questions_v2';
 export default function AllQuestionsScreen() {
   const { colors, theme } = useTheme();
   const { overview } = useLocalSearchParams();
-  const { t } = useTranslation();
+  const navigation = useNavigation();
+  const translation = useTranslation();
+  const t = (translation as any).t || {};
   const { language } = useLanguage();
   const [bookmarked, setBookmarked] = useState<string[]>([]);
   const [answeredQuestions, setAnsweredQuestions] = useState<string[]>([]);
@@ -86,7 +86,7 @@ export default function AllQuestionsScreen() {
   }, [overview]);
 
   // Mark question as answered
-  const markQuestionAnswered = async (question) => {
+  const markQuestionAnswered = async (question: any) => {
     const id = getQuestionId(question);
     if (!answeredQuestions.includes(id)) {
       const updated = [...answeredQuestions, id];
@@ -96,7 +96,7 @@ export default function AllQuestionsScreen() {
   };
 
   // Add/remove bookmark handler
-  const toggleBookmark = async (question) => {
+  const toggleBookmark = async (question: any) => {
     const id = getQuestionId(question);
     let updated;
     if (bookmarked.includes(id)) {
@@ -142,7 +142,7 @@ export default function AllQuestionsScreen() {
   };
 
   // Toggle question overview
-  const toggleQuestionOverview = async () => {
+  const toggleQuestionOverview = useCallback(async () => {
     setShowQuestionOverview(prev => {
       const newValue = !prev;
       
@@ -165,7 +165,12 @@ export default function AllQuestionsScreen() {
       
       return newValue;
     });
-  };
+  }, [currentQuestionIndex]);
+
+  // Set up navigation params to communicate with header button
+  useEffect(() => {
+    (navigation as any).setParams({ toggleOverview: toggleQuestionOverview });
+  }, [navigation, toggleQuestionOverview]);
 
   const goBack = () => {
     if (showQuestionOverview) {
@@ -184,44 +189,6 @@ export default function AllQuestionsScreen() {
     container: { 
       flex: 1, 
       backgroundColor: colors.background 
-    },
-    headerBackground: {
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: theme === 'dark' ? 'rgba(15, 23, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)',
-    },
-    backButton: {
-      width: 36,
-      height: 36,
-      borderRadius: 18,
-      backgroundColor: colors.infoBackground,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: colors.tint,
-      shadowColor: colors.tint,
-      shadowOpacity: 0.1,
-      shadowRadius: 2,
-      shadowOffset: { width: 0, height: 1 },
-      elevation: 1,
-    },
-    backButtonText: {
-      fontSize: 18,
-      color: colors.tint,
-      fontWeight: 'bold',
-    },
-    appBarTitle: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: colors.text,
-      textAlign: 'center',
-      letterSpacing: 0.1,
-    },
-    counterText: {
-      fontSize: 12,
-      fontWeight: '500',
-      color: colors.textSecondary,
-      textAlign: 'center',
-      marginTop: 2,
     },
     overviewButton: {
       backgroundColor: colors.tint,
@@ -349,9 +316,21 @@ export default function AllQuestionsScreen() {
     disabledButtonText: {
       color: colors.textMuted,
     },
+    progressContainer: {
+      flex: 0.5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 8,
+    },
+    progressText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: colors.text,
+      textAlign: 'center',
+    },
   });
 
-  const onHandlerStateChange = (event) => {
+  const onHandlerStateChange = (event: any) => {
     if (event.nativeEvent.state === State.END && !showQuestionOverview) {
       const { translationX, velocityX } = event.nativeEvent;
       
@@ -368,50 +347,7 @@ export default function AllQuestionsScreen() {
   };
 
   return (
-    <SafeAreaView style={dynamicStyles.container} edges={['top']}>
-      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor="transparent" translucent />
-      
-      {/* Header */}
-      <View style={styles.headerContainer}>
-        {Platform.OS === 'ios' ? (
-          <BlurView intensity={90} style={styles.blurView} tint={theme === 'dark' ? 'dark' : 'light'} />
-        ) : (
-          <View style={dynamicStyles.headerBackground} />
-        )}
-      </View>
-      
-      {/* Compact App Bar with Integrated Counter */}
-      <View style={styles.appBar}>
-        <View style={styles.appBarContent}>
-          <TouchableOpacity 
-            style={dynamicStyles.backButton}
-            onPress={goBack}
-            accessibilityLabel={t.go_back}
-            activeOpacity={0.7}
-          >
-            <Text style={dynamicStyles.backButtonText}>←</Text>
-          </TouchableOpacity>
-          <View style={styles.titleContainer}>
-            <Text style={dynamicStyles.appBarTitle} numberOfLines={1} ellipsizeMode="tail">
-              {t.all_questions_title}
-            </Text>
-            <Text style={dynamicStyles.counterText}>
-              Q{currentQuestionIndex + 1}/{limitedQuestions.length}
-            </Text>
-          </View>
-          <View style={styles.rightActions}>
-            <TouchableOpacity 
-              style={dynamicStyles.overviewButton}
-              onPress={toggleQuestionOverview}
-              activeOpacity={0.7}
-            >
-              <GridIcon size={16} color="#ffffff" />
-            </TouchableOpacity>
-            <View style={styles.placeholderButton} />
-          </View>
-        </View>
-      </View>
-
+    <SafeAreaView style={dynamicStyles.container} edges={['left', 'right', 'bottom']}>
       {/* Main Content with Pan Gesture Handler */}
       <PanGestureHandler 
         onHandlerStateChange={onHandlerStateChange}
@@ -467,15 +403,15 @@ export default function AllQuestionsScreen() {
                     if (isCurrent) {
                       statusStyle = [dynamicStyles.questionNumberButton, dynamicStyles.currentQuestion];
                       textStyle = [dynamicStyles.questionNumberText, dynamicStyles.currentQuestionText];
-                      statusLabel = ` (${t.current})`;
+                      statusLabel = ` (${t.current || 'Current'})`;
                     } else if (isCorrect) {
                       statusStyle = [dynamicStyles.questionNumberButton, dynamicStyles.correctQuestion];
                       textStyle = [dynamicStyles.questionNumberText, dynamicStyles.correctQuestionText];
-                      statusLabel = ` (${t.correct})`;
+                      statusLabel = ` (${t.correct || 'Correct'})`;
                     } else if (isIncorrect) {
                       statusStyle = [dynamicStyles.questionNumberButton, dynamicStyles.incorrectQuestion];
                       textStyle = [dynamicStyles.questionNumberText, dynamicStyles.incorrectQuestionText];
-                      statusLabel = ` (${t.incorrect})`;
+                      statusLabel = ` (${t.incorrect || 'Incorrect'})`;
                     }
                     
                     return (
@@ -534,6 +470,13 @@ export default function AllQuestionsScreen() {
             </Text>
           </TouchableOpacity>
           
+          {/* Progress Indicator */}
+          <View style={dynamicStyles.progressContainer}>
+            <Text style={dynamicStyles.progressText}>
+              {currentQuestionIndex + 1}/{limitedQuestions.length}
+            </Text>
+          </View>
+          
           <TouchableOpacity 
             style={[dynamicStyles.navButton, currentQuestionIndex === limitedQuestions.length - 1 && dynamicStyles.disabledButton]}
             onPress={goToNextQuestion}
@@ -555,106 +498,9 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: '#f8f9fc' 
   },
-  headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: Platform.OS === 'ios' ? 70 : 60,
-    zIndex: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  blurView: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  headerBackground: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-  },
-  appBar: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0,
-    paddingHorizontal: 12,
-    paddingBottom: 6,
-    zIndex: 20,
-  },
-  appBarContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    minHeight: 44,
-    paddingVertical: 2,
-  },
-  backButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#e6f2ff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#0a7ea4',
-    shadowColor: '#0a7ea4',
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    shadowOffset: { width: 0, height: 1 },
-    elevation: 1,
-  },
-  backButtonText: {
-    fontSize: 18,
-    color: '#0a7ea4',
-    fontWeight: 'bold',
-  },
-  titleContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  appBarTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#0a7ea4',
-    textAlign: 'center',
-    letterSpacing: 0.1,
-  },
-  rightActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  placeholderButton: {
-    minHeight: 36,
-    minWidth: 36,
-  },
-  
-  // Compact Counter Text (now in header)
-  counterText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#6b7280',
-    textAlign: 'center',
-    marginTop: 2,
-  },
-  overviewButton: {
-    backgroundColor: '#3b82f6',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    borderRadius: 16,
-    minHeight: 32,
-    minWidth: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  overviewButtonText: {
-    fontSize: 14,
-  },
-
   // Main Content
   mainContent: {
     flex: 1,
-    marginTop: 2,
   },
   questionScrollView: {
     flex: 1,
