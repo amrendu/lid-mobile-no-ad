@@ -397,7 +397,7 @@ export default function SettingsScreen() {
 const windowHeight = Dimensions.get('window').height; // For responsive sizing
 
   return (
-    <SafeAreaView style={dynamicStyles.safeArea} edges={['left', 'right', 'bottom']}>
+    <SafeAreaView style={dynamicStyles.safeArea} edges={['left', 'right']}>
       <ScrollView style={dynamicStyles.container}>
       {/* Preferences Section */}
       <SettingSection title={t.preferences}>

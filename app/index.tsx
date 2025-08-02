@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
-  StatusBar,
   Dimensions,
   Animated,
   AppState
@@ -370,7 +369,6 @@ const availableLanguages = ['EN', 'DE', 'TR'];
 
   return (
     <SafeAreaView style={dynamicStyles.container} edges={['top']}>
-      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} backgroundColor="transparent" translucent />
       
       {/* Header */}
       <View style={styles.headerContainer}>
@@ -618,7 +616,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   appBar: {
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight || 0 : 0,
+    paddingTop: Platform.OS === 'android' ? 0 : 0,
     zIndex: 20,
   },
   appBarContent: {

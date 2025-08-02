@@ -4,6 +4,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
+import { Platform, StatusBar as RNStatusBar } from 'react-native';
 import 'react-native-reanimated';
 
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
@@ -179,7 +180,11 @@ function RootLayoutContent() {
         />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+      <StatusBar 
+        style={theme === 'dark' ? 'light' : 'dark'} 
+        backgroundColor="transparent"
+        translucent={Platform.OS === 'android'}
+      />
     </NavigationThemeProvider>
   );
 }
