@@ -259,18 +259,6 @@ const TermsOfService = () => {
       fontWeight: '600',
       marginLeft: Spacing.sm,
     },
-    floatingButton: {
-      position: 'absolute',
-      bottom: Spacing.xl,
-      right: Spacing.xl,
-      width: 56,
-      height: 56,
-      borderRadius: 28,
-      backgroundColor: colors.tint,
-      alignItems: 'center',
-      justifyContent: 'center',
-      ...Shadows.large,
-    },
     quickNavContainer: {
       flexDirection: 'row',
       justifyContent: 'space-around',
@@ -539,16 +527,6 @@ const TermsOfService = () => {
           <ContactInfo email="support@einbuergerungstest-fragen24.de" />
         </Section>
       </ScrollView>
-
-      {/* Floating Action Button */}
-      <TouchableOpacity 
-        style={dynamicStyles.floatingButton}
-        onPress={() => {
-          // Handle quick contact action
-        }}
-      >
-        <ContactIcon size={24} color="#ffffff" />
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
