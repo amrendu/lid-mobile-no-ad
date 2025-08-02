@@ -279,6 +279,58 @@ export const translations = {
     reset_all_data_desc: "Clear everything and start fresh",
     debug_info: "Debug Info",
     debug_info_desc: "View app version and debug information",
+    
+    // Terms of Service
+    terms_of_service_title: "Terms of Service",
+    terms_of_service_subtitle: "Please read these terms carefully before using our citizenship test preparation app",
+    terms_last_updated: "Last updated: December 2024",
+    terms_quick_nav_overview: "Overview",
+    terms_quick_nav_privacy: "Privacy",
+    terms_quick_nav_contact: "Contact",
+    
+    // Section 1: Acceptance of Terms
+    terms_acceptance_title: "Acceptance of Terms",
+    terms_acceptance_content: "By using this mobile app, you agree to these terms of service. If you disagree, please do not use the app.",
+    
+    // Section 2: Service Description
+    terms_service_title: "Service Description",
+    terms_service_content: "Our mobile app provides free preparation for the German citizenship test with the following features:",
+    terms_service_features: [
+      "All 300 official BAMF questions",
+      "Test simulator with realistic conditions",
+      "State-specific questions",
+      "Progress tracking and bookmarks",
+      "Multi-language support"
+    ],
+    terms_service_source: "All questions in this app are sourced directly from the official BAMF question catalog:",
+    terms_bamf_catalog_title: "BAMF Official Question Catalog",
+    terms_bamf_catalog_url: "www.bamf.de/SharedDocs/Anlagen/DE/Integration/Einbuergerung/gesamtfragenkatalog-lebenindeutschland.html",
+    terms_regular_updates_title: "Regular Updates",
+    terms_regular_updates_content: "We regularly update our question database to ensure it matches the official BAMF version.",
+    terms_source_pdf_title: "Source PDF Date",
+    terms_source_pdf_date: "PDF version from: 07.05.2025",
+    
+    // Section 3: Disclaimers
+    terms_disclaimers_title: "Disclaimers",
+    terms_disclaimer_educational_title: "Educational Purpose",
+    terms_disclaimer_educational_content: "This mobile app is for educational purposes only and is not officially affiliated with BAMF.",
+    terms_disclaimer_guarantee_title: "No Success Guarantee",
+    terms_disclaimer_guarantee_content: "We do not guarantee that using this mobile app will result in passing the official test.",
+    terms_disclaimer_accuracy_title: "Content Accuracy",
+    terms_disclaimer_accuracy_content: "While we strive to provide accurate information, we cannot guarantee completeness or accuracy.",
+    
+    // Section 4: Limitation of Liability
+    terms_liability_title: "Limitation of Liability",
+    terms_liability_content: "We are not liable for direct, indirect, or consequential damages arising from the use of this mobile app.",
+    
+    // Section 5: Changes to Terms
+    terms_changes_title: "Changes to Terms",
+    terms_changes_content: "We reserve the right to modify these terms of service at any time. Changes will be posted on this page.",
+    
+    // Section 6: Contact Us
+    terms_contact_title: "Contact Us",
+    terms_contact_content: "For questions about these terms of service, contact us:",
+    terms_contact_email: "support@einbuergerungstest-fragen24.de",
   },
   
   DE: {
@@ -527,6 +579,58 @@ export const translations = {
     reset_all_data_desc: "Alles löschen und neu anfangen",
     debug_info: "Debug-Informationen",
     debug_info_desc: "App-Version und Debug-Informationen anzeigen",
+    
+    // Terms of Service
+    terms_of_service_title: "Nutzungsbedingungen",
+    terms_of_service_subtitle: "Bitte lesen Sie diese Bedingungen sorgfältig durch, bevor Sie unsere App zur Vorbereitung auf den Einbürgerungstest verwenden",
+    terms_last_updated: "Zuletzt aktualisiert: Dezember 2024",
+    terms_quick_nav_overview: "Übersicht",
+    terms_quick_nav_privacy: "Datenschutz",
+    terms_quick_nav_contact: "Kontakt",
+    
+    // Section 1: Acceptance of Terms
+    terms_acceptance_title: "Annahme der Bedingungen",
+    terms_acceptance_content: "Durch die Nutzung dieser mobilen App stimmen Sie diesen Nutzungsbedingungen zu. Wenn Sie nicht einverstanden sind, verwenden Sie die App bitte nicht.",
+    
+    // Section 2: Service Description
+    terms_service_title: "Servicebeschreibung",
+    terms_service_content: "Unsere mobile App bietet kostenlose Vorbereitung auf den deutschen Einbürgerungstest mit folgenden Funktionen:",
+    terms_service_features: [
+      "Alle 300 offiziellen BAMF-Fragen",
+      "Test-Simulator mit realistischen Bedingungen",
+      "Bundeslandspezifische Fragen",
+      "Fortschrittsverfolgung und Lesezeichen",
+      "Mehrsprachige Unterstützung"
+    ],
+    terms_service_source: "Alle Fragen in dieser App stammen direkt aus dem offiziellen BAMF-Fragenkatalog:",
+    terms_bamf_catalog_title: "BAMF Offizieller Fragenkatalog",
+    terms_bamf_catalog_url: "www.bamf.de/SharedDocs/Anlagen/DE/Integration/Einbuergerung/gesamtfragenkatalog-lebenindeutschland.html",
+    terms_regular_updates_title: "Regelmäßige Updates",
+    terms_regular_updates_content: "Wir aktualisieren unsere Fragendatenbank regelmäßig, um sicherzustellen, dass sie der offiziellen BAMF-Version entspricht.",
+    terms_source_pdf_title: "Quell-PDF-Datum",
+    terms_source_pdf_date: "PDF-Version vom: 07.05.2025",
+    
+    // Section 3: Disclaimers
+    terms_disclaimers_title: "Haftungsausschlüsse",
+    terms_disclaimer_educational_title: "Bildungszweck",
+    terms_disclaimer_educational_content: "Diese mobile App dient nur Bildungszwecken und ist nicht offiziell mit dem BAMF verbunden.",
+    terms_disclaimer_guarantee_title: "Keine Erfolgsgarantie",
+    terms_disclaimer_guarantee_content: "Wir garantieren nicht, dass die Nutzung dieser mobilen App zum Bestehen der offiziellen Prüfung führt.",
+    terms_disclaimer_accuracy_title: "Inhaltsgenauigkeit",
+    terms_disclaimer_accuracy_content: "Obwohl wir uns bemühen, genaue Informationen bereitzustellen, können wir keine Vollständigkeit oder Genauigkeit garantieren.",
+    
+    // Section 4: Limitation of Liability
+    terms_liability_title: "Haftungsbeschränkung",
+    terms_liability_content: "Wir haften nicht für direkte, indirekte oder Folgeschäden, die durch die Nutzung dieser mobilen App entstehen.",
+    
+    // Section 5: Changes to Terms
+    terms_changes_title: "Änderungen der Bedingungen",
+    terms_changes_content: "Wir behalten uns das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Änderungen werden auf dieser Seite veröffentlicht.",
+    
+    // Section 6: Contact Us
+    terms_contact_title: "Kontaktieren Sie uns",
+    terms_contact_content: "Bei Fragen zu diesen Nutzungsbedingungen kontaktieren Sie uns:",
+    terms_contact_email: "support@einbuergerungstest-fragen24.de",
   },
   
   TR: {
@@ -775,6 +879,58 @@ export const translations = {
     reset_all_data_desc: "Her şeyi temizle ve yeni başla",
     debug_info: "Hata Ayıklama Bilgileri",
     debug_info_desc: "Uygulama sürümü ve hata ayıklama bilgilerini görüntüle",
+    
+    // Terms of Service
+    terms_of_service_title: "Hizmet Şartları",
+    terms_of_service_subtitle: "Vatandaşlık testi hazırlık uygulamamızı kullanmadan önce lütfen bu şartları dikkatle okuyun",
+    terms_last_updated: "Son güncelleme: Aralık 2024",
+    terms_quick_nav_overview: "Genel Bakış",
+    terms_quick_nav_privacy: "Gizlilik",
+    terms_quick_nav_contact: "İletişim",
+    
+    // Section 1: Acceptance of Terms
+    terms_acceptance_title: "Şartların Kabulü",
+    terms_acceptance_content: "Bu mobil uygulamayı kullanarak, bu hizmet şartlarını kabul etmiş olursunuz. Kabul etmiyorsanız, lütfen uygulamayı kullanmayın.",
+    
+    // Section 2: Service Description
+    terms_service_title: "Hizmet Açıklaması",
+    terms_service_content: "Mobil uygulamamız, aşağıdaki özelliklerle Alman vatandaşlık testi için ücretsiz hazırlık sağlar:",
+    terms_service_features: [
+      "Tüm 300 resmi BAMF sorusu",
+      "Gerçekçi koşullarla test simülatörü",
+      "Eyalet özel soruları",
+      "İlerleme takibi ve yer imleri",
+      "Çok dilli destek"
+    ],
+    terms_service_source: "Bu uygulamadaki tüm sorular doğrudan resmi BAMF soru kataloğundan alınmıştır:",
+    terms_bamf_catalog_title: "BAMF Resmi Soru Kataloğu",
+    terms_bamf_catalog_url: "www.bamf.de/SharedDocs/Anlagen/DE/Integration/Einbuergerung/gesamtfragenkatalog-lebenindeutschland.html",
+    terms_regular_updates_title: "Düzenli Güncellemeler",
+    terms_regular_updates_content: "Resmi BAMF sürümüyle eşleştiğinden emin olmak için soru veritabanımızı düzenli olarak güncelliyoruz.",
+    terms_source_pdf_title: "Kaynak PDF Tarihi",
+    terms_source_pdf_date: "PDF sürümü: 07.05.2025",
+    
+    // Section 3: Disclaimers
+    terms_disclaimers_title: "Feragatnameler",
+    terms_disclaimer_educational_title: "Eğitim Amacı",
+    terms_disclaimer_educational_content: "Bu mobil uygulama yalnızca eğitim amaçlıdır ve BAMF ile resmi olarak bağlantılı değildir.",
+    terms_disclaimer_guarantee_title: "Başarı Garantisi Yok",
+    terms_disclaimer_guarantee_content: "Bu mobil uygulamayı kullanmanın resmi testi geçmeyle sonuçlanacağını garanti etmiyoruz.",
+    terms_disclaimer_accuracy_title: "İçerik Doğruluğu",
+    terms_disclaimer_accuracy_content: "Doğru bilgi sağlamaya çalışsak da, tamlık veya doğruluk garantisi veremeyiz.",
+    
+    // Section 4: Limitation of Liability
+    terms_liability_title: "Sorumluluk Sınırlaması",
+    terms_liability_content: "Bu mobil uygulamanın kullanımından kaynaklanan doğrudan, dolaylı veya sonuçsal zararlardan sorumlu değiliz.",
+    
+    // Section 5: Changes to Terms
+    terms_changes_title: "Şartlarda Değişiklikler",
+    terms_changes_content: "Bu hizmet şartlarını istediğimiz zaman değiştirme hakkını saklı tutarız. Değişiklikler bu sayfada yayınlanacaktır.",
+    
+    // Section 6: Contact Us
+    terms_contact_title: "Bizimle İletişime Geçin",
+    terms_contact_content: "Bu hizmet şartları hakkında sorularınız için bizimle iletişime geçin:",
+    terms_contact_email: "support@einbuergerungstest-fragen24.de",
   }
 };
 

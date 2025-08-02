@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 
 import { ThemeProvider, useTheme } from '../contexts/ThemeContext';
 import { LanguageProvider } from '../src/utils/languageContext';
+import { useTranslation } from '../src/hooks/useTranslation';
 import { Colors } from '../constants/Colors';
 
 // Custom navigation themes that match our color system
@@ -38,6 +39,7 @@ const CustomDarkTheme = {
 
 function RootLayoutContent() {
   const { theme } = useTheme();
+  const translation = useTranslation();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
@@ -62,8 +64,8 @@ function RootLayoutContent() {
         <Stack.Screen 
           name="pages/TermsOfService" 
           options={{ 
-            title: 'Terms of Service',
-            headerBackTitle: 'Back'
+            title: (translation as any).t?.terms_of_service_title || 'Terms of Service',
+            headerBackTitle: (translation as any).t?.go_back || 'Back'
           }} 
         />
         <Stack.Screen name="+not-found" />

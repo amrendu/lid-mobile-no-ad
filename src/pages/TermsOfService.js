@@ -45,48 +45,6 @@ const TermsOfService = () => {
       flex: 1,
       backgroundColor: colors.backgroundSecondary,
     },
-    headerContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: Spacing.lg,
-      backgroundColor: colors.card,
-      borderBottomWidth: 1,
-      borderBottomColor: colors.border,
-      ...Shadows.medium,
-    },
-    backButton: {
-      width: 44,
-      height: 44,
-      borderRadius: BorderRadius.large,
-      backgroundColor: colors.backgroundSecondary,
-      alignItems: 'center',
-      justifyContent: 'center',
-      ...Shadows.small,
-    },
-    headerTitle: {
-      ...Typography.heading.h3,
-      color: colors.text,
-      flex: 1,
-      textAlign: 'center',
-      fontWeight: '600',
-    },
-    headerIconContainer: {
-      width: 44,
-      height: 44,
-      borderRadius: BorderRadius.large,
-      backgroundColor: colors.tint + '15',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    progressBar: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      height: 3,
-      backgroundColor: colors.tint,
-      borderRadius: 2,
-    },
     scrollContainer: {
       padding: Spacing.lg,
       paddingBottom: Spacing.xl * 2,
@@ -287,6 +245,100 @@ const TermsOfService = () => {
       color: colors.textMuted,
       textAlign: 'center',
     },
+    sourceInfo: {
+      backgroundColor: colors.infoBackground,
+      padding: Spacing.lg,
+      borderRadius: BorderRadius.large,
+      borderLeftWidth: 4,
+      borderLeftColor: colors.info,
+      marginTop: Spacing.md,
+      ...Shadows.small,
+    },
+    sourceHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: Spacing.sm,
+    },
+    sourceIconContainer: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: colors.info + '20',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: Spacing.sm,
+    },
+    sourceTitle: {
+      ...Typography.heading.h6,
+      color: colors.info,
+      fontWeight: '600',
+    },
+    sourceUrl: {
+      ...Typography.body.small,
+      color: colors.info,
+      fontFamily: 'monospace',
+      backgroundColor: colors.backgroundSecondary,
+      padding: Spacing.sm,
+      borderRadius: BorderRadius.small,
+      marginTop: Spacing.xs,
+    },
+    updateInfo: {
+      backgroundColor: colors.successBackground,
+      padding: Spacing.md,
+      borderRadius: BorderRadius.medium,
+      marginTop: Spacing.md,
+      borderWidth: 1,
+      borderColor: colors.success + '30',
+    },
+    updateHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: Spacing.xs,
+    },
+    updateIconContainer: {
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: colors.success + '20',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginRight: Spacing.sm,
+    },
+    updateTitle: {
+      ...Typography.body.medium,
+      color: colors.success,
+      fontWeight: '600',
+    },
+    updateText: {
+      ...Typography.body.small,
+      color: colors.success,
+      lineHeight: 20,
+    },
+    versionInfo: {
+      backgroundColor: colors.backgroundSecondary,
+      padding: Spacing.md,
+      borderRadius: BorderRadius.medium,
+      marginTop: Spacing.md,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    versionHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: Spacing.xs,
+    },
+    versionTitle: {
+      ...Typography.body.small,
+      color: colors.textMuted,
+      fontWeight: '500',
+      marginLeft: Spacing.xs,
+    },
+    versionDate: {
+      ...Typography.body.medium,
+      color: colors.text,
+      fontWeight: '600',
+      fontFamily: 'monospace',
+    },
   });
 
   const Section = ({ title, children, icon: IconComponent, iconColor, sectionNumber }) => (
@@ -356,19 +408,19 @@ const TermsOfService = () => {
         <View style={dynamicStyles.quickNavIcon}>
           <BookIcon size={16} color={colors.tint} />
         </View>
-        <Text style={dynamicStyles.quickNavText}>Overview</Text>
+        <Text style={dynamicStyles.quickNavText}>{t.terms_quick_nav_overview}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={dynamicStyles.quickNavItem}>
         <View style={dynamicStyles.quickNavIcon}>
           <HelpIcon size={16} color={colors.warning} />
         </View>
-        <Text style={dynamicStyles.quickNavText}>Privacy</Text>
+        <Text style={dynamicStyles.quickNavText}>{t.terms_quick_nav_privacy}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={dynamicStyles.quickNavItem}>
         <View style={dynamicStyles.quickNavIcon}>
           <ContactIcon size={16} color={colors.success} />
         </View>
-        <Text style={dynamicStyles.quickNavText}>Contact</Text>
+        <Text style={dynamicStyles.quickNavText}>{t.terms_quick_nav_contact}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -379,34 +431,8 @@ const TermsOfService = () => {
   );
 
   return (
-    <SafeAreaView style={dynamicStyles.container} edges={['top']}>
+    <SafeAreaView style={dynamicStyles.container} edges={['bottom', 'left', 'right']}>
       <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
-      
-      {/* Enhanced Header */}
-      <View style={dynamicStyles.headerContainer}>
-        <TouchableOpacity 
-          style={dynamicStyles.backButton}
-          onPress={() => router.back()}
-        >
-          <BackIcon size={20} color={colors.text} />
-        </TouchableOpacity>
-        <Text style={dynamicStyles.headerTitle}>Terms of Service</Text>
-        <View style={dynamicStyles.headerIconContainer}>
-          <BookIcon size={20} color={colors.tint} />
-        </View>
-        <Animated.View 
-          style={[
-            dynamicStyles.progressBar,
-            {
-              width: scrollY.interpolate({
-                inputRange: [0, 1000],
-                outputRange: [0, width],
-                extrapolate: 'clamp',
-              }),
-            }
-          ]}
-        />
-      </View>
       
       <ScrollView 
         style={{ flex: 1 }}
@@ -420,13 +446,13 @@ const TermsOfService = () => {
           <View style={dynamicStyles.heroIconContainer}>
             <BookIcon size={40} color={colors.tint} />
           </View>
-          <Text style={dynamicStyles.title}>Terms of Service</Text>
+          <Text style={dynamicStyles.title}>{t.terms_of_service_title}</Text>
           <Text style={dynamicStyles.subtitle}>
-            Please read these terms carefully before using our citizenship test preparation service
+            {t.terms_of_service_subtitle}
           </Text>
           <View style={dynamicStyles.lastUpdatedContainer}>
             <CalendarIcon size={14} color={colors.textMuted} />
-            <Text style={dynamicStyles.updated}>Last updated: December 2024</Text>
+            <Text style={dynamicStyles.updated}>{t.terms_last_updated}</Text>
           </View>
         </View>
 
@@ -434,97 +460,113 @@ const TermsOfService = () => {
         <QuickNavigation />
 
         <Section 
-          title="Acceptance of Terms" 
+          title={t.terms_acceptance_title} 
           icon={CheckIcon} 
           iconColor={colors.success}
           sectionNumber="01"
         >
           <Paragraph>
-            By using this website, you agree to these terms of service. If you disagree, please do not use the website.
+            {t.terms_acceptance_content}
           </Paragraph>
         </Section>
 
         <Section 
-          title="Service Description" 
+          title={t.terms_service_title} 
           icon={StudyIcon} 
           iconColor={colors.tint}
           sectionNumber="02"
         >
           <Paragraph>
-            Our website provides free preparation for the German citizenship test with the following features:
+            {t.terms_service_content}
           </Paragraph>
-          <BulletList items={[
-            'All 300 official BAMF questions',
-            'Test simulator with realistic conditions',
-            'State-specific questions',
-            'Progress tracking and bookmarks',
-            'Multi-language support'
-          ]} />
-        </Section>
-
-        <Section 
-          title="Intellectual Property" 
-          icon={CertificateIcon} 
-          iconColor={colors.info}
-          sectionNumber="03"
-        >
+          <BulletList items={t.terms_service_features} />
           <Paragraph>
-            All content on this website is protected by copyright. BAMF questions are publicly available and used for educational purposes.
+            {t.terms_service_source}
           </Paragraph>
-          <ImportantNote>
-            Questions are from the official BAMF question catalog and used solely for educational purposes.
-          </ImportantNote>
+          
+          <View style={dynamicStyles.sourceInfo}>
+            <View style={dynamicStyles.sourceHeader}>
+              <View style={dynamicStyles.sourceIconContainer}>
+                <BookIcon size={20} color={colors.info} />
+              </View>
+              <Text style={dynamicStyles.sourceTitle}>{t.terms_bamf_catalog_title}</Text>
+            </View>
+            <Text style={dynamicStyles.sourceUrl}>
+              {t.terms_bamf_catalog_url}
+            </Text>
+          </View>
+
+          <View style={dynamicStyles.updateInfo}>
+            <View style={dynamicStyles.updateHeader}>
+              <View style={dynamicStyles.updateIconContainer}>
+                <CheckIcon size={16} color={colors.success} />
+              </View>
+              <Text style={dynamicStyles.updateTitle}>{t.terms_regular_updates_title}</Text>
+            </View>
+            <Text style={dynamicStyles.updateText}>
+              {t.terms_regular_updates_content}
+            </Text>
+          </View>
+
+          <View style={dynamicStyles.versionInfo}>
+            <View style={dynamicStyles.versionHeader}>
+              <CalendarIcon size={16} color={colors.textMuted} />
+              <Text style={dynamicStyles.versionTitle}>{t.terms_source_pdf_title}</Text>
+            </View>
+            <Text style={dynamicStyles.versionDate}>{t.terms_source_pdf_date}</Text>
+          </View>
         </Section>
 
+
         <Section 
-          title="Disclaimers" 
+          title={t.terms_disclaimers_title} 
           icon={WarningIcon} 
           iconColor={colors.warning}
-          sectionNumber="04"
+          sectionNumber="03"
         >
-          <Disclaimer title="Educational Purpose">
-            This website is for educational purposes only and is not officially affiliated with BAMF.
+          <Disclaimer title={t.terms_disclaimer_educational_title}>
+            {t.terms_disclaimer_educational_content}
           </Disclaimer>
-          <Disclaimer title="No Success Guarantee">
-            We do not guarantee that using this website will result in passing the official test.
+          <Disclaimer title={t.terms_disclaimer_guarantee_title}>
+            {t.terms_disclaimer_guarantee_content}
           </Disclaimer>
-          <Disclaimer title="Content Accuracy">
-            While we strive to provide accurate information, we cannot guarantee completeness or accuracy.
+          <Disclaimer title={t.terms_disclaimer_accuracy_title}>
+            {t.terms_disclaimer_accuracy_content}
           </Disclaimer>
         </Section>
 
         <Section 
-          title="Limitation of Liability" 
+          title={t.terms_liability_title} 
           icon={HelpIcon} 
           iconColor={colors.error}
+          sectionNumber="04"
+        >
+          <Paragraph>
+            {t.terms_liability_content}
+          </Paragraph>
+        </Section>
+
+        <Section 
+          title={t.terms_changes_title} 
+          icon={EditIcon} 
+          iconColor={colors.tint}
           sectionNumber="05"
         >
           <Paragraph>
-            We are not liable for direct, indirect, or consequential damages arising from the use of this website.
+            {t.terms_changes_content}
           </Paragraph>
         </Section>
 
         <Section 
-          title="Changes to Terms" 
-          icon={EditIcon} 
-          iconColor={colors.tint}
+          title={t.terms_contact_title} 
+          icon={SupportIcon} 
+          iconColor={colors.success}
           sectionNumber="06"
         >
           <Paragraph>
-            We reserve the right to modify these terms of service at any time. Changes will be posted on this page.
+            {t.terms_contact_content}
           </Paragraph>
-        </Section>
-
-        <Section 
-          title="Contact Us" 
-          icon={SupportIcon} 
-          iconColor={colors.success}
-          sectionNumber="07"
-        >
-          <Paragraph>
-            For questions about these terms of service, contact us:
-          </Paragraph>
-          <ContactInfo email="support@einbuergerungstest-fragen24.de" />
+          <ContactInfo email={t.terms_contact_email} />
         </Section>
       </ScrollView>
     </SafeAreaView>
